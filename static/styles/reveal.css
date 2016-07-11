@@ -1,0 +1,12 @@
+@import "reveal.js/css/reveal.css";
+@import "reveal.js/css/theme/night.css";
+
+.reveal > .slides > section,
+.reveal > .slides > section > section {
+	transform-style: flat;
+}
+
+.reveal code, .reveal pre {
+	font-family: 'Consolas', 'Inconsolata', monospace;
+	tab-size: 4;
+}

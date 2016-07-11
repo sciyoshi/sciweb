@@ -1,0 +1,38 @@
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		title Introduction to Rust
+
+		link(rel="stylesheet", href="/static/styles/reveal.css")
+		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css")
+
+	body
+		.reveal
+			.slides
+				section
+					h2 Introduction to Rust
+				section.
+					Rust is a systems programming language that runs blazingly fast, prevents nearly all segfaults, and guarantees thread safety.
+
+				section
+					pre: code.rust.
+						fn main() {
+							let x: u64 = 3;
+						}
+
+		script(src="/static/scripts/reveal.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.load.min.js")
+		//script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js")
+		//script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/languages/rust.min.js")
+		script(type="text/javascript").
+			Reveal.initialize({
+				transition: 'none',
+				dependencies: [{
+					src: '/static/scripts/highlight.js',
+					async: true,
+					callback: function() {
+						hljs.initHighlightingOnLoad();
+					}
+				}]
+			});
