@@ -37,11 +37,11 @@ gulp.task('styles', () =>
 		.pipe(gulp.dest('build/static/styles/'))
 );
 
-gulp.task('watch', gulp.parallel('content', 'scripts', 'styles', 'fonts', () => {
+gulp.task('watch', gulp.parallel('content', 'scripts', 'styles', () => {
 	gulp.watch(['content/**/*.jade'], gulp.series('content'));
 	gulp.watch(['static/styles/**/*.css'], gulp.series('styles'));
 	//gulp.watch(['static/scripts/**/*.js'], ['scripts']);
 
 }));
 
-gulp.task('default', gulp.parallel('content', 'scripts', 'styles', 'fonts'));
+gulp.task('default', gulp.parallel('content', 'scripts', 'styles'));
