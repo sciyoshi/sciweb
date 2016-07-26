@@ -50,6 +50,10 @@ body {
 	line-height: 1.5;
 }
 
+.reveal pre code {
+	max-height: 700px;
+}
+
 .reveal ul li {
 	margin-top: 0.5em;
 }

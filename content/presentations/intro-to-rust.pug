@@ -1,0 +1,205 @@
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		title Introduction to Rust
+
+		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css")
+		link(rel="stylesheet", href="/static/styles/reveal.css")
+
+	body
+		.reveal
+			.slides
+				section
+					h2 Introduction to Rust
+				section.
+					<strong>Rust</strong> is a systems programming language that runs blazingly fast, prevents nearly all segfaults, and guarantees thread safety.
+				section
+					h2 Rust is a <strong>systems language</strong>
+					ul
+						li Originally developed by Mozilla
+						li Competes with C/C++
+						li Low-level data layout control
+					aside.notes
+						ul
+							li Announced in 2010
+							li Biggest user is Rust (self-hosting) and Servo
+							li Most Loved on Stack Overflow Developer Survey 2016
+							li Good for networked servers, device drivers, even OSes
+							li Two camps: C and Python
+				section
+					h2 Rust runs <strong>blazingly fast</strong>
+					ul
+						li Compiled with LLVM
+						li Zero-cost abstractions
+						li No garbage collector
+					aside.notes
+						ul
+							li Same as clang C and Swift
+							li Iterators, closures optimize away to nothing
+							li Can even be faster because of aliasing
+							li Optional reference counting
+				section
+					h2 Rust <strong>prevents segfaults</strong>
+					ul
+						li Sophisticated type system
+						li Safe by default
+						li No null pointers, dangling pointers, or use-after-free
+					aside.notes
+						ul
+							li No undefined behavior
+							li Supports unsafety, but with a boundary
+				section
+					h2 Rust guarantees <strong>thread safety</strong>
+					ul
+						li Ownership and borrowing
+						li Strong aliasing and mutability guarantees
+					aside.notes
+						ul
+							li Ensures no data races or cross-thread dangling pointers
+							li Doesn't solve race conditions!
+							li Mostly provided by standard library (no language primitives like Go)
+							li Send (can be sent between threads) + Sync types (atomic locks, mutexes)
+				section
+					h2 The Basics
+				section
+					pre: code.rust.
+						fn main() {
+							let names = ["Alice", "Bob", "Carol", "Dave"];
+							let mut index = 1;
+
+							index += 1;
+
+							println!("Your name is {}", names[index]);
+						}
+				section
+					pre: code.rust.
+						fn avg(x: f64, y: f64) -&gt; f64 {
+							(x + y) / 2.0
+						}
+				section
+					h2 Features
+					ul
+						li Structs and enums
+						li Pattern matching
+						li Generics
+						li Traits and dynamic dispatch
+						li Closures
+						li Operator overloading
+						li Macros
+				section
+					h2 Stack vs Heap
+					ul
+						li Arrays
+							ul
+								li Elements allocated on stack
+								li Size is a property of the type (can't be changed)
+						li Vectors
+							ul
+								li Stack: <code class="rust">(size, capacity, items)</code>
+								li Elements allocated on heap
+					aside.notes
+						ul
+							li Before understanding ownership
+				section
+					pre: code.rust.
+						fn main() {
+							let mut items = vec![1, 2, 3];
+
+							vec.push(4);
+
+							println("{:?}", items);
+						}
+				section
+					h2 Ownership, Borrowing, and Lifetimes
+				section
+					pre: code.rust.
+						fn demo(val: Vec&lt;u64&gt;) {
+							println!("{:?}", val);
+						}
+
+						fn main() {
+							let val = vec![1, 2, 3];
+
+							demo(val); // OK
+							demo(val); // ERROR: use of moved value: `val`
+						}
+				section
+					pre: code.rust.
+						fn demo(val: &amp;Vec&lt;u64&gt;) {
+							println!("{:?}", val);
+						}
+
+						fn main() {
+							let val = vec![1, 2, 3];
+
+							demo(&amp;val); // OK
+							demo(&amp;val); // OK
+						}
+				section
+					pre: code.rust.
+						fn demo(val: &amp;mut Vec&lt;u64&gt;) {
+							val.push(10);
+						}
+
+						fn main() {
+							let mut val = vec![1, 2, 3];
+
+							demo(&amp;mut val);
+							demo(&amp;mut val);
+
+							println!("{:?}", val);
+						}
+				section
+					pre: code.rust.
+						fn main() {
+							let mut x = 10;
+
+							let y = &amp;mut x;
+
+							*y += 1;
+
+							// ERROR: cannot borrow `x` as immutable
+							//        because it is also borrowed as mutable
+							println!("{:?}", x);
+						}
+				section
+					pre: code.rust.
+						fn main() {
+							let mut x = 10;
+
+							{
+								let y = &amp;mut x;
+
+								*y += 1;
+							}
+
+							println!("{:?}", x); // OK
+						}
+				section
+					h2 Thank You!
+					ul
+						li The <strong>Rust Book</strong>: https://doc.rust-lang.org/book/
+						li <strong>Online Playpen</strong>: https://play.rust-lang.org/
+				section
+					h2 https://bit.ly/<strong>rustguess</strong>
+					h2 WiFi: MonkeyGuest<br/><strong>Welcome2thejungle</strong>
+
+		script(src="/static/scripts/reveal.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.load.min.js")
+		//script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js")
+		//script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/languages/rust.min.js")
+		script(type="text/javascript").
+			Reveal.initialize({
+				transition: 'none',
+				dependencies: [{
+					src: '/static/scripts/highlight.js',
+					async: true,
+					callback: function() {
+						hljs.initHighlightingOnLoad();
+					}
+				}, {
+					src: '/static/scripts/notes.js',
+					async: true
+				}]
+			});
