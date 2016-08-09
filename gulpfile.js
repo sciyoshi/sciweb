@@ -27,7 +27,7 @@ let template = (name) => {
 	});
 }
 
-gulp.task('articles', () =>
+gulp.task('articles-md', () =>
 	gulp.src(['content/articles/*.md'])
 		.pipe(frontmatter({
 			property: 'page',
@@ -38,6 +38,18 @@ gulp.task('articles', () =>
 		.pipe(gulp.dest('build/content/articles/'))
 );
 
+gulp.task('articles-html', () =>
+	gulp.src(['content/articles/*.html'])
+		.pipe(frontmatter({
+			property: 'page',
+			remove: true
+		}))
+		.pipe(template('base'))
+		.pipe(gulp.dest('build/content/articles/'))
+);
+
+gulp.task('articles', gulp.parallel('articles-md', 'articles-html'));
+
 gulp.task('content', () =>
 	gulp.src(['content/**/*.pug'])
 		.pipe(pug())
@@ -45,7 +57,7 @@ gulp.task('content', () =>
 );
 
 gulp.task('scripts', () =>
-	gulp.src('node_modules/reveal.js/js/reveal.js')
+	gulp.src(['node_modules/reveal.js/js/reveal.js', 'static/scripts/**.js'])
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
@@ -53,7 +65,7 @@ gulp.task('scripts', () =>
 );
 
 gulp.task('styles', () =>
-	gulp.src(['static/styles/reveal.css'])
+	gulp.src(['static/styles/**.css'])
 		.pipe(sourcemaps.init())
 		.pipe(postcss([
 			postcssImport(),
@@ -66,7 +78,7 @@ gulp.task('styles', () =>
 );
 
 gulp.task('watch', gulp.parallel('content', 'scripts', 'styles', 'articles', () => {
-	gulp.watch(['content/**/*.jade'], gulp.series('content'));
+	gulp.watch(['content/**/*.pug', 'content/**/*.md', 'content/**/*.html', 'templates/*.pug'], gulp.parallel('content', 'articles'));
 	gulp.watch(['static/styles/**/*.css'], gulp.series('styles'));
 	//gulp.watch(['static/scripts/**/*.js'], ['scripts']);
 }));
