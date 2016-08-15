@@ -50,10 +50,15 @@ gulp.task('articles-html', () =>
 
 gulp.task('articles', gulp.parallel('articles-md', 'articles-html'));
 
-gulp.task('content', () =>
-	gulp.src(['content/**/*.pug'])
+gulp.task('presentations', () =>
+	gulp.src(['content/presentations/*.pug'])
+		.pipe(frontmatter({
+			property: 'page',
+			remove: true
+		}))
 		.pipe(pug())
-		.pipe(gulp.dest('build/content/'))
+		.pipe(template('presentation'))
+		.pipe(gulp.dest('build/content/presentations/'))
 );
 
 gulp.task('scripts', () =>
@@ -77,10 +82,10 @@ gulp.task('styles', () =>
 		.pipe(gulp.dest('build/static/styles/'))
 );
 
-gulp.task('watch', gulp.parallel('content', 'scripts', 'styles', 'articles', () => {
-	gulp.watch(['content/**/*.pug', 'content/**/*.md', 'content/**/*.html', 'templates/*.pug'], gulp.parallel('content', 'articles'));
+gulp.task('watch', gulp.parallel('presentations', 'scripts', 'styles', 'articles', () => {
+	gulp.watch(['content/**/*.pug', 'content/**/*.md', 'content/**/*.html', 'templates/*.pug'], gulp.parallel('presentations', 'articles'));
 	gulp.watch(['static/styles/**/*.css'], gulp.series('styles'));
 	//gulp.watch(['static/scripts/**/*.js'], ['scripts']);
 }));
 
-gulp.task('default', gulp.parallel('content', 'scripts', 'styles', 'articles'));
+gulp.task('default', gulp.parallel('presentations', 'scripts', 'styles', 'articles'));

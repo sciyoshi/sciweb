@@ -1,0 +1,226 @@
+---
+title: Rust Traits
+---
+
+section
+	h2 <strong>Types</strong> and <strong>Traits</strong>
+section
+	h2 Why Strong Typing?
+	pre: code.c.
+		static int
+		check_if_ca (gnutls_x509_crt_t cert, gnutls_x509_crt_t issuer,
+		             unsigned int flags) {
+		    int result =
+		        _gnutls_x509_get_signed_data (issuer-&gt;cert, "tbsCertificate",
+		                                      &amp;issuer_signed_data);
+		    if (result &lt; 0) {
+		        gnutls_assert ();
+		        goto cleanup;
+		    }
+
+		    // snip
+		    result = 0;
+
+		cleanup:
+		    // cleanup type stuff
+		    return result;
+		}
+section
+	pre: code.c.
+		if (check_if_ca(...)) {
+			// oops!
+		}
+section
+	pre: code.javascript.
+		[] == ![] // -&gt; true
+section
+	h2 Primitive Types
+	ul
+		li #[code.rust bool]
+		li #[code.rust char]
+		li #[code.rust i8/i16/i32/i64/isize]
+		li #[code.rust u8/u16/u32/u64/usize]
+		li #[code.rust f32/f64]
+section
+	h2 Primitive Types (cont)
+	ul
+		li Tuples: #[code.rust (A, B, ...)]
+		li Arrays: #[code.rust [T; N]]
+		li Slices: #[code.rust &amp;[T]]
+		li Strings: #[code.rust &amp;str]
+		li Functions: #[code.rust fn(A, B, ...) -&gt; X]
+section
+	h2 Enums
+	pre: code.rust.
+		enum Medal {
+			Gold,
+			Silver,
+			Bronze
+		}
+
+		let winner = Medal::Gold;
+section
+	h2 Structs
+	pre: code.rust.
+		struct Rect {
+			width: f64,
+			height: f64
+		}
+
+		let r = Rect { width: 3.0f, height: 5.0f };
+section
+	h2 Tuple Structs
+	pre: code.rust.
+		struct RGB(u8, u8, u8);
+
+		let color = RGB(255, 255, 0);
+section
+	h2 Inherent #[code.rust impl]s
+	pre: code.rust.
+		struct Rect {
+			width: f64,
+			height: f64
+		}
+
+		impl Rect {
+			fn area(&amp;self) -&gt; f64 {
+				self.width * self.height
+			}
+		}
+
+		fn print_area(r: &amp;Rect) {
+			println!("Area: {}", r.area());
+		}
+section
+	h2 Inherent #[code.rust impl]s
+	pre: code.rust.
+		struct Rect { ... }
+
+		impl Rect {
+			fn double(&amp;mut self) {
+				self.width *= 2;
+				self.height *= 2;
+			}
+		}
+section
+	h2 Traits
+section
+	h2 What Are Traits?
+	ul
+		li A collection of methods
+		li iface in C#/Java
+		li typeclass in Haskell
+		li can be generic
+		li collection of methods
+section
+	pre: code.rust.
+		fn avg(x: f64, y: f64) -&gt; f64 {
+			(x + y) / 2.0
+		}
+section
+	h2 Features
+	ul
+		li Structs and enums
+		li Pattern matching
+		li Generics
+		li Traits and dynamic dispatch
+		li Closures
+		li Operator overloading
+		li Macros
+section
+	h2 Stack vs Heap
+	ul
+		li Arrays
+			ul
+				li Elements allocated on stack
+				li Size is a property of the type (can't be changed)
+		li Vectors
+			ul
+				li Stack: <code class="rust">(size, capacity, items)</code>
+				li Elements allocated on heap
+	aside.notes
+		ul
+			li Before understanding ownership
+section
+	pre: code.rust.
+		fn main() {
+			let mut items = vec![1, 2, 3];
+
+			vec.push(4);
+
+			println("{:?}", items);
+		}
+section
+	h2 Ownership, Borrowing, and Lifetimes
+section
+	pre: code.rust.
+		fn demo(val: Vec&lt;u64&gt;) {
+			println!("{:?}", val);
+		}
+
+		fn main() {
+			let val = vec![1, 2, 3];
+
+			demo(val); // OK
+			demo(val); // ERROR: use of moved value: `val`
+		}
+section
+	pre: code.rust.
+		fn demo(val: &amp;Vec&lt;u64&gt;) {
+			println!("{:?}", val);
+		}
+
+		fn main() {
+			let val = vec![1, 2, 3];
+
+			demo(&amp;val); // OK
+			demo(&amp;val); // OK
+		}
+section
+	pre: code.rust.
+		fn demo(val: &amp;mut Vec&lt;u64&gt;) {
+			val.push(10);
+		}
+
+		fn main() {
+			let mut val = vec![1, 2, 3];
+
+			demo(&amp;mut val);
+			demo(&amp;mut val);
+
+			println!("{:?}", val);
+		}
+section
+	pre: code.rust.
+		fn main() {
+			let mut x = 10;
+
+			let y = &amp;mut x;
+
+			*y += 1;
+
+			// ERROR: cannot borrow `x` as immutable
+			//        because it is also borrowed as mutable
+			println!("{:?}", x);
+		}
+section
+	pre: code.rust.
+		fn main() {
+			let mut x = 10;
+
+			{
+				let y = &amp;mut x;
+
+				*y += 1;
+			}
+
+			println!("{:?}", x); // OK
+		}
+section
+	h2 Thank You!
+	ul
+		li The <strong>Rust Book</strong>: https://doc.rust-lang.org/book/
+		li <strong>Online Playpen</strong>: https://play.rust-lang.org/
+section
+	h2 https://bit.ly/<strong>rustguess</strong>
+	h2 WiFi: MonkeyGuest<br/><strong>Welcome2thejungle</strong>
