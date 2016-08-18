@@ -18,21 +18,23 @@ section
 		        goto cleanup;
 		    }
 
-		    // snip
+		    // more checks...
+
 		    result = 0;
 
 		cleanup:
-		    // cleanup type stuff
+		    // cleanup code...
 		    return result;
 		}
 section
 	pre: code.c.
-		if (check_if_ca(...)) {
+		if (check_if_ca (...)) {
 			// oops!
 		}
 section
 	pre: code.javascript.
 		[] == ![] // -&gt; true
+		new Boolean(false) == !(new Boolean(false)) // -&gt; true
 section
 	h2 Primitive Types
 	ul
@@ -58,7 +60,18 @@ section
 			Bronze
 		}
 
-		let winner = Medal::Gold;
+		let phelps = Medal::Gold;
+section
+	h2 Enums
+	pre: code.rust.
+		enum Medal {
+			Gold,
+			Silver,
+			Bronze,
+			Finalist(u8)
+		}
+
+		let fourth = Medal::Finalist(4);
 section
 	h2 Structs
 	pre: code.rust.
@@ -67,13 +80,17 @@ section
 			height: f64
 		}
 
-		let r = Rect { width: 3.0f, height: 5.0f };
+		let r = Rect { width: 3.0, height: 5.0 };
+
+		let r2 = Rect { width: 5.0, .. r };
 section
 	h2 Tuple Structs
 	pre: code.rust.
 		struct RGB(u8, u8, u8);
 
 		let color = RGB(255, 255, 0);
+
+		println!("red: {}", color.0);
 section
 	h2 Inherent #[code.rust impl]s
 	pre: code.rust.
@@ -92,7 +109,7 @@ section
 			println!("Area: {}", r.area());
 		}
 section
-	h2 Inherent #[code.rust impl]s
+	h2 Inherent #[code.rust impl]s (cont)
 	pre: code.rust.
 		struct Rect { ... }
 
@@ -102,125 +119,167 @@ section
 				self.height *= 2;
 			}
 		}
+
+		fn main() {
+			let mut r = Rect { width: 3.0, height: 5.0 }
+			println!("Area: {}", r.area());
+		}
 section
 	h2 Traits
 section
 	h2 What Are Traits?
 	ul
 		li A collection of methods
-		li iface in C#/Java
-		li typeclass in Haskell
-		li can be generic
-		li collection of methods
-section
-	pre: code.rust.
-		fn avg(x: f64, y: f64) -&gt; f64 {
-			(x + y) / 2.0
-		}
-section
-	h2 Features
-	ul
-		li Structs and enums
-		li Pattern matching
-		li Generics
-		li Traits and dynamic dispatch
-		li Closures
+		li Used as bounds for generic functions
+		li Markers for specific functionality
 		li Operator overloading
-		li Macros
+		li Most similar to Haskell typeclasses (or interfaces in C#/Java)
+		li Can be generic
+		li Trait Objects
 section
-	h2 Stack vs Heap
-	ul
-		li Arrays
-			ul
-				li Elements allocated on stack
-				li Size is a property of the type (can't be changed)
-		li Vectors
-			ul
-				li Stack: <code class="rust">(size, capacity, items)</code>
-				li Elements allocated on heap
-	aside.notes
-		ul
-			li Before understanding ownership
-section
+	h2 Defining a Trait
 	pre: code.rust.
-		fn main() {
-			let mut items = vec![1, 2, 3];
-
-			vec.push(4);
-
-			println("{:?}", items);
+		trait Shape {
+			fn area(&amp;self) -&gt; f64;
 		}
 section
-	h2 Ownership, Borrowing, and Lifetimes
-section
+	h2 Implementing Traits
 	pre: code.rust.
-		fn demo(val: Vec&lt;u64&gt;) {
-			println!("{:?}", val);
+		struct Rect {
+			width: f64,
+			height: f64
 		}
 
-		fn main() {
-			let val = vec![1, 2, 3];
-
-			demo(val); // OK
-			demo(val); // ERROR: use of moved value: `val`
-		}
-section
-	pre: code.rust.
-		fn demo(val: &amp;Vec&lt;u64&gt;) {
-			println!("{:?}", val);
-		}
-
-		fn main() {
-			let val = vec![1, 2, 3];
-
-			demo(&amp;val); // OK
-			demo(&amp;val); // OK
-		}
-section
-	pre: code.rust.
-		fn demo(val: &amp;mut Vec&lt;u64&gt;) {
-			val.push(10);
-		}
-
-		fn main() {
-			let mut val = vec![1, 2, 3];
-
-			demo(&amp;mut val);
-			demo(&amp;mut val);
-
-			println!("{:?}", val);
-		}
-section
-	pre: code.rust.
-		fn main() {
-			let mut x = 10;
-
-			let y = &amp;mut x;
-
-			*y += 1;
-
-			// ERROR: cannot borrow `x` as immutable
-			//        because it is also borrowed as mutable
-			println!("{:?}", x);
-		}
-section
-	pre: code.rust.
-		fn main() {
-			let mut x = 10;
-
-			{
-				let y = &amp;mut x;
-
-				*y += 1;
+		impl Shape for Rect {
+			fn area(&amp;self) -&gt; f64 {
+				self.width * self.height
 			}
-
-			println!("{:?}", x); // OK
 		}
+
+		struct Circle {
+			radius: f64
+		}
+
+		impl Shape for Circle {
+			fn area(&amp;self) -&gt; f64 {
+				std::f64::consts::PI * self.radius * self.radius
+			}
+		}
+section
+	h2 Using Traits
+	pre: code.rust.
+		let r = Rect { width: 3.0, height: 5.0 };
+
+		r.area(); // Shape must be imported!
+
+		Shape::area(&amp;r);
+section
+	h2 Trait Bounds
+	pre: code.rust.
+		fn print_area&lt;T: Shape&gt;(shape: &amp;T) {
+			println!("{}", shape.area());
+		}
+
+		fn print_shape_and_area&lt;T: Shape + Display&gt;(shape: &amp;T) {
+			println!("Area of {}: {}", shape, shape.area());
+		}
+section
+	h2 Trait Bounds (cont)
+	pre: code.rust.
+		struct Scene&lt;T&gt; where T: Shape {
+			shapes: Vec&lt;T&gt;;
+		}
+section
+	h2 Trait Objects
+	pre: code.rust.
+		fn print_area(shape: &amp;Shape) {
+			println!("{}", shape.area());
+		}
+section
+	h2 Type Parameters
+	pre: code.rust.
+		trait Add&lt;Rhs=Self&gt; {
+			type Output;
+
+			fn add(self, rhs: Rhs) -&gt; Self::Output;
+		}
+
+		struct Point(f64, f64);
+
+		impl Add&lt;Point&gt; for Point {
+			type Output = Self;
+
+			fn add(self, other: Point) -&gt; Point {
+				Point(self.0 + other.0, self.1 + other.1)
+			}
+		}
+section
+	h2 Type Parameters (cont)
+	pre: code.rust.
+		trait Graph&lt;V, E&gt; { }
+
+		fn adjacent&lt;V, E, G: Graph&lt;V, E&gt;&gt;(g: &amp;G, v: &amp;V, e: &amp;E) -&gt; bool { }
+section
+	h2 Type Parameters (cont)
+	pre: code.rust.
+		trait Graph {
+			type V;
+			type E;
+		}
+
+		fn adjacent&lt;G: Graph&gt;(g: &amp;G, v: &amp;G::V, e: &amp;G::E) -&gt; bool { }
+section
+	h2 Default Methods
+	pre: code.rust.
+		trait Name {
+			fn full_name(&amp;self) -&gt; &amp;str;
+
+			fn first_name(&amp;self) -&gt; &amp;str {
+				self.full_name().split_whitespace().next().unwrap()
+			}
+		}
+
+		struct Person&lt;'a&gt;(&amp;'a str);
+
+		impl&lt;'a&gt; Name for Person&lt;'a&gt; {
+			fn full_name(&amp;self) -&gt; &amp;str { self.0 }
+		}
+section
+	h2 Trait Inheritance
+	pre: code.rust.
+		trait Key : Hash + Eq + Clone {
+			...
+		}
+section
+	h2 Specialization
+	pre: code.rust.
+		\#![feature(specialization)]
+
+		trait Print {
+			fn print(&amp;self);
+		}
+
+		impl&lt;T: Display&gt; Print for T {
+			default fn print(&amp;self) {
+				println!("{}", self);
+			}
+		}
+
+		impl Print for i32 {
+			fn print(&amp;self) {
+				println!("printing i32: {}", self);
+			}
+		}
+section
+	h2 The Future
+	ul
+		li Abstract return types (aka #[code impl Trait])
+		li Higher-kinded types
+		li Virtual structs for object hierarchies
 section
 	h2 Thank You!
 	ul
 		li The <strong>Rust Book</strong>: https://doc.rust-lang.org/book/
 		li <strong>Online Playpen</strong>: https://play.rust-lang.org/
 section
-	h2 https://bit.ly/<strong>rustguess</strong>
 	h2 WiFi: MonkeyGuest<br/><strong>Welcome2thejungle</strong>

@@ -25,7 +25,21 @@ let template = (name) => {
 		this.push(file);
 		cb();
 	});
-}
+};
+
+let collect = () => {
+	let all = [];
+
+	return through.obj(function(file, enc, cb) {
+		all.push(file);
+		this.push(file);
+		cb();
+	}, function(cb) {
+		all.sort((a, b) => a > b ? 1 : -1);
+		console.log(all.map(a => a.path));
+		cb();
+	});
+};
 
 gulp.task('articles-md', () =>
 	gulp.src(['content/articles/*.md'])
@@ -34,6 +48,7 @@ gulp.task('articles-md', () =>
 			remove: true
 		}))
 		.pipe(markdown())
+		.pipe(collect())
 		.pipe(template('base'))
 		.pipe(gulp.dest('build/content/articles/'))
 );
