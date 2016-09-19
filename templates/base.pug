@@ -3,39 +3,18 @@ html
 	head
 		meta(charset="UTF-8")/
 		meta(name="google-site-verification", content="bGqtdT-Lnf7PpF9wD4TzrmRKHl-RMhSaJTn4xpQNG6M")/
-		meta(http-equiv="X-XRDS-Location", content="http://www.myopenid.com/xrds?username=sciyoshi.myopenid.com")/
 
-		link(rel="openid.server", href="http://www.myopenid.com/server")/
-		link(rel="openid.delegate", href="http://sciyoshi.myopenid.com/")/
 		link(rel="stylesheet", type="text/css", href="/static/styles/main.css")/
 		link(rel="stylesheet", type="text/css", href="/static/styles/github.css")/
 
-		script(src="https://use.typekit.net/yvp8del.js")
+		script(src="https://use.typekit.net/yvp8del.js", async=true)
 		script(type="text/javascript") try{Typekit.load({ async: true });}catch(e){}
 
 		script(src="/static/scripts/highlight.pack.js")
 		script(type="text/javascript") hljs.initHighlightingOnLoad();
 
-		if page.mathjax
-			script(type="text/x-mathjax-config").
-				MathJax.Hub.Config({
-					extensions: ["tex2jax.js", "TeX/AMSmath.js", "MatchWebFonts.js"],
-					jax: ["input/TeX", "output/HTML-CSS"],
-					MatchWebFonts: {
-						matchFor: {
-							"HTML-CSS": true,
-							NativeMML: false,
-							SVG: false
-						},
-						fontCheckDelay: 2000,
-						fontCheckTimeout: 30 * 1000
-					},
-					tex2jax: {inlineMath: [["$", "$"], ["\\(", "\\)"]]}
-				});
-
-			script(async, src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML")
-
-		title= page.title
+		block scripts
+		block title
 
 	body
 		div#header
@@ -48,10 +27,10 @@ html
 				li: a(href="/about/") About
 
 		div#main
-			h1 !{page.title}
-			| !{contents}
+			block main
 
 		script(
 			src="https://code.jquery.com/jquery-3.1.0.slim.min.js",
 			integrity="sha256-cRpWjoSOw5KcyIOaZNo4i6fZ9tKPhYYb6i5T9RSVJG8=",
-			crossorigin="anonymous")
+			crossorigin="anonymous",
+			async=true)

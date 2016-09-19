@@ -1,0 +1,10 @@
+extends ../templates/base.pug
+
+block main
+	each article in all
+		div.article
+			div.date #{article.date}
+			h2: a(href=article.url) #{article.title}
+			div.description #{article.description}
+
+	a(href="?page=#{next}") Next

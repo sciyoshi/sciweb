@@ -1,4 +1,9 @@
-# Writing Python Extension Modules in Rust
+---
+title: Writing Python Extension Modules in Rust
+published: false
+description: 
+mathjax: true
+---
 
 Python is an amazing language - it's my tool of choice for most programming tasks because of its expressive power, readability, and vibrant and helpful community.
 
@@ -18,7 +23,7 @@ These qualities make Rust a great option for writing high-performance Python ext
 
 ## Lucas Sequences
 
-In this post we'll be looking at how to write an extension module to compute Lucas numbers, which are extensions of Fibonacci numbers to different starting values.
+In this post we'll be looking at how to write an extension module to compute Lucas numbers (actually, linear recurrences), which are extensions of Fibonacci numbers to different starting values. To be precise, given coefficients we will compute a sequence $a\_n$ of numbers defined by the recurrence relation $$a\_{n+k} = \sum\_{i=0}^{k-1} c\_i a\_{n + i}$$ for initial values $a\_0, a\_1, ... a\_{k-1}$ and coefficients $c\_0, c\_1, ... c\_{k-1}$.
 
 ## Defining a Module
 
@@ -39,7 +44,7 @@ The first argument is our module's name, the next two are the function names for
 
 ## Adding a Class
 
-`rust-cpython` also comes with a [macro that lets you easily create Python classes](http://dgrunwald.github.io/rust-cpython/doc/cpython/macro.py_class!.html). You can define data items on the class, which are added to the Rust struct and are not accessible from Python unless you add accessor methods.
+`rust-cpython` also comes with a [macro that lets you easily create Python classes](http://dgrunwald.github.io/rust-cpython/doc/cpython/macro.py_class!.html). You can define data items on the class, which are added to the underlying Rust struct. By default, these are inaccessible from Python unless you explicitly add accessor methods.
 
 In this example, we want to create a Python iterator. In order to calculate the next value in the sequence, it needs to store the list of coefficients, and the past $n$ values in the sequence. The code then looks like this:
 
@@ -63,11 +68,11 @@ py_class!(class LucasIter |py| {
 });
 ```
 
-The two data items are `coef` and `vals`. We need to use a [`RefCell`]() to get [interior mutability]().
+The two data items are `coef` and `vals`. We need to use a [`RefCell`]() to get [interior mutability](). To compute the dot product, the coefficients are zipped with the vector of previous values, then each element is multiplied before summing.
 
 ### Ownership and Reference Counting
 
-One big advantage of using Rust is that reference counting is handled automatically by the type system. When a Python object in Rust goes out of scope, its `Drop` implementation decrements the reference count. Similarly,  Our `__iter__` implementation calls 
+One big advantage of using Rust is that reference counting is handled automatically by the type system. When an (owned) Python object in Rust goes out of scope, its `Drop` implementation decrements the reference count. When ownership is taken, the assumption is that the CPython reference has been passed. What that means is that there is no need to manually handle these references, unlike C's calls to `Py_INCREF/DECREF`. If a function takes a borrow, then the reference count is incremented during its lifetime (see [`from_borrowed_ptr`]()).
 
 ### Lifetimes and the GIL
 
@@ -75,12 +80,9 @@ Python has a (oft-maligned) mechanism called the Global Interpreter Lock, or GIL
 
 In the Rust bindings, the mechanism for acquiring and releasing this lock is handled using [lifetimes](). The `py` variable we saw above signals that the GIL is held for the duration of its scope. Similarly, the GIL can be acquired manually using [RAII]() with `Python::acquire_gil()`. Any functions which require the GIL (like getting Python types, or accessing fields) will require this parameter to be passed.
 
-
-
 ## Defining a Function
 
-Let's add a simple function to our module. FIXME
-
+Let's add a simple function to our module to return an instance of our `LucasIter` class. FIXME
 
 ## Making it Distributable
 
@@ -109,4 +111,30 @@ We also need to import these macros and make them available within the file:
 extern crate cpython;
 ```
 
-Finally, we need a `setup.py` file to build our Python package.
+At this point, we can build an importable library simply by running `cargo build` - but we can do better! We can use the [Rust extensions for setuptools]() to create installable Python packages. To do this, we'll create a `setup.py` file:
+
+```python
+from setuptools import setup, dist
+
+dist.Distribution(dict(setup_requires=['rust-ext==0.1']))
+
+from rust_ext import build_rust_cmdclass, install_lib_including_rust
+
+setup(
+    name='lucas',
+    version='0.1',
+    description='Lucas sequences',
+    author='Samuel Cormier-Iijima',
+    author_email='sciyoshi@gmail.com',
+    cmdclass={
+        'build_rust': build_rust_cmdclass('Cargo.toml'),
+        'install_lib': install_lib_including_rust
+    },
+    zip_safe=False)
+```
+
+There's a few things to notice here. We first create an explicit distribution which depends on the `rust-ext` package. This lets others run `setup.py` without needing to install the package manually. We then use `build_rust_cmdclass` and `install_lib_including_rust` to override the `setup.py install` command to build the library with Cargo.
+
+## Conclusion
+
+We've seen how to use `rust-cpython` to create native Python extensions in Rust. These bindings are an excellent way to get started optimizing specific bits of slow Python code. There are other approaches to calling out to Rust from Python that I haven't mentioned here, including using `cffi` and `ctypes`. [Dan Callahan]() gave a great talk about this at PyCon in Montreal, and it's a great alternative to using the Python bindings directly.
