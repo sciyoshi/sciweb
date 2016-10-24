@@ -6,6 +6,16 @@ body {
 	background-color: #333438;
 }
 
+img.inline,
+.reveal section img.inline {
+	border: none;
+	background: transparent;
+	margin: 0;
+	box-shadow: none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .hljs {
 	background: transparent;
 }
@@ -46,7 +56,7 @@ body {
 }
 
 .reveal pre {
-	font-size: 0.7em;
+	font-size: 0.8em;
 	line-height: 1.5;
 	padding: 0.5em;
 	background: #404144;
@@ -66,7 +76,7 @@ body {
 }
 
 .reveal code, .reveal pre {
-	font-family: 'Consolas', 'Inconsolata', monospace;
+	font-family: 'Inconsolata', 'Consolas', monospace;
 	tab-size: 2;
 	box-shadow: none;
 }

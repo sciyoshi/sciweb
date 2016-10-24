@@ -99,16 +99,23 @@ gulp.task('articles', () => {
 		.pipe(gulp.dest('build/content/articles'));
 });
 
-gulp.task('presentations', () =>
-	gulp.src(['content/presentations/*.pug'])
+gulp.task('presentations', () => {
+	let presentations = gulp.src(['content/presentations/*.pug'])
 		.pipe(frontmatter({
 			property: 'page',
 			remove: true
 		}))
 		.pipe(pug())
-		.pipe(template('presentation'))
-		.pipe(gulp.dest('build/content/presentations/'))
-);
+		.pipe(template('presentation'));
+
+	let assets = gulp.src(['content/presentations/**/*.png', 'content/presentations/**/*.jpg', 'content/presentations/**/*.svg'])
+		.pipe(rename((path) => {
+			path.dirname = path.dirname.replace(/^(\d\d\d\d)-(\d\d)-(\d\d)-(.*)$/, "$1/$2/$4/");
+		}));
+
+	return merge(presentations, assets)
+		.pipe(gulp.dest('build/content/presentations'));
+});
 
 gulp.task('scripts', () =>
 	gulp.src(['node_modules/reveal.js/js/reveal.js', 'static/scripts/**.js'])
@@ -131,10 +138,25 @@ gulp.task('styles', () =>
 		.pipe(gulp.dest('build/static/styles/'))
 );
 
-gulp.task('watch', gulp.parallel('presentations', 'scripts', 'styles', 'articles', () => {
-	gulp.watch(['content/**/*.pug', 'content/**/*.md', 'content/**/*.html', 'templates/*.pug'], gulp.parallel('presentations', 'articles'));
+
+
+let tasks = [
+	'articles', 'presentations', 'styles', 'scripts'
+];
+
+gulp.task('watch', gulp.parallel(tasks, () => {
+	gulp.watch([
+		'content/**/*.pug',
+		'content/**/*.md',
+		'content/**/*.html',
+		'content/**/*.png',
+		'content/**/*.jpg',
+		'content/**/*.svg',
+		'templates/*.pug'
+	], gulp.parallel('presentations', 'articles'));
+
 	gulp.watch(['static/styles/**/*.css'], gulp.series('styles'));
 	//gulp.watch(['static/scripts/**/*.js'], ['scripts']);
 }));
 
-gulp.task('default', gulp.parallel('presentations', 'scripts', 'styles', 'articles'));
+gulp.task('default', gulp.parallel(tasks));

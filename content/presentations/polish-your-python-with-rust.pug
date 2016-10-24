@@ -1,0 +1,103 @@
+---
+title: Polish Your Python With Rust
+---
+
+section
+	h2.
+		Polish Your
+		#[img.inline(style="width: 1.5em; height: 1.5em;", src="polish-your-python-with-rust/python.svg")]
+		With
+		#[img.inline(style="width: 1.5em; height: 1.5em;", src="polish-your-python-with-rust/rust.svg")]
+
+section
+	h2 Background
+
+section
+	blockquote A language that doesn't affect the way you think about programming, is not worth knowing.
+
+section
+	pre: code.python.
+		class Facebook(object):
+			_methods = ['friends.get', ...]
+
+			for method_name in _methods:
+				signature = 'def ' + method_name.replace('.', '_') + '(self'
+
+				# ... snip ...
+
+				body += indent2 + 'return self._call_method("facebook.' + method_name + '"'
+
+				definition = signature + body
+
+				exec definition
+
+
+section
+	h2 About Rust
+
+section
+	img(src="polish-your-python-with-rust/rust-1.0.png")
+
+section
+	h2 Rust's Killer Features
+	ul
+		li Strong type system
+		li Memory safe
+		li Zero-cost abstractions
+
+section
+	pre: code.rust.
+		fn main() {
+			let greet = "world";
+
+			println!("Hello, {}!", greet);
+		}
+
+section
+	pre: code.shell.
+		λ rustc hello.rs
+		λ ./hello
+		Hello, world!
+
+section
+	h2 Extending Python
+
+
+//
+	sources:
+	tools: Ashim D’Silva @randomlies
+	road: Antonio Grosz @angro
+
+
+//
+	Python moving towards strong typing.
+	Grabber
+
+	C LOC
+
+	Python: 296k (479k Python)
+	NSS: 550k
+	OpenSSL: 285k
+	LZMA: 23k
+	MPDecimal: 15k
+	BZIP: 5k
+
+
+
+	Background
+
+	- Why another language?
+
+	  Can't python do everything?
+
+	My History
+
+	Release 0.10 in 2014
+
+	Rust 1.0 announced in 2015
+
+	- Quote
+
+	A language that doesn't affect the way you think about programming, is not worth knowing.
+	New concepts: ownership and traits
+
