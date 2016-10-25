@@ -1,0 +1,97 @@
+@import "reveal.js/css/reveal.css";
+
+@import "reveal.js/css/theme/template/mixins";
+@import "reveal.js/css/theme/template/settings";
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/tomorrow.min.css);
+
+
+$backgroundColor: #fff;
+
+$mainFont: 'Lato', sans-serif;
+$linkColor: #e7ad52;
+$linkColorHover: lighten( $linkColor, 20% );
+$headingFont: 'Montserrat', Impact, sans-serif;
+$headingColor: #111;
+$headingTextShadow: none;
+$headingLetterSpacing: -0.03em;
+$headingTextTransform: none;
+$selectionBackgroundColor: #e7ad52;
+$mainFontSize: 30px;
+$mainColor: #222;
+
+@import "reveal.js/css/theme/template/theme";
+
+.reveal > .slides > section,
+.reveal > .slides > section > section {
+	transform-style: flat;
+}
+
+.reveal .slides section {
+	img.inline {
+		border: none;
+		background: transparent;
+		margin: 0;
+		box-shadow: none;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	strong {
+		color: #4DF69A;
+	}
+
+	blockquote {
+		font-size: 1.5em;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	cite {
+		font-size: 0.9em;
+	}
+
+	code, pre {
+		font-family: 'Inconsolata', 'Consolas', monospace;
+		tab-size: 2;
+		box-shadow: none;
+		max-height: 700px;
+	}
+
+	pre {
+		font-size: 0.8em;
+		line-height: 1.5;
+		padding: 0.5em;
+
+		code {
+			max-height: 750px;
+		}
+
+		mark {
+			padding: 5px 9px;
+			margin: 0 -10px;
+			border: 1px dashed transparent;
+			border-radius: 5px;
+			color: inherit;
+			background: transparent;
+		}
+	}
+
+	ul li {
+		margin-top: 0.5em;
+	}
+
+	.fragment.highlight-current-background-gray {
+		opacity: 1;
+		visibility: visible;
+
+		&.current-fragment {
+			background: #eee;
+			border-color: #ddd;
+		}
+	}
+}

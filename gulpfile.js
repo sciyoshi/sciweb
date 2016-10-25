@@ -8,6 +8,7 @@ let sourcemaps = require('gulp-sourcemaps');
 let frontmatter = require('gulp-front-matter');
 let markdown = require('gulp-markdown');
 let uglify = require('gulp-uglify');
+let sass = require('gulp-sass');
 let postcss = require('gulp-postcss');
 let postcssImport = require('postcss-import');
 let precss = require('precss');
@@ -125,23 +126,38 @@ gulp.task('scripts', () =>
 		.pipe(gulp.dest('build/static/scripts/'))
 );
 
-gulp.task('styles', () =>
-	gulp.src(['static/styles/**.css'])
+gulp.task('images', () =>
+	gulp.src(['static/images/**'])
+		.pipe(gulp.dest('build/static/images/'))
+);
+
+gulp.task('styles', () => {
+	let scss = gulp.src(['static/styles/**/*.scss'])
 		.pipe(sourcemaps.init())
+		.pipe(sass({
+			includePaths: ['node_modules', 'static/styles']
+		}));
+
+	let css = gulp.src(['static/styles/**/*.css'])
+		.pipe(sourcemaps.init())
+
+	return merge(css, scss)
 		.pipe(postcss([
-			postcssImport(),
+			postcssImport({
+				path: ['static/styles']
+			}),
 			precss(),
 			autoprefixer(),
 			cssnano()
 		]))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('build/static/styles/'))
-);
+});
 
 
 
 let tasks = [
-	'articles', 'presentations', 'styles', 'scripts'
+	'articles', 'presentations', 'styles', 'scripts', 'images'
 ];
 
 gulp.task('watch', gulp.parallel(tasks, () => {
@@ -155,7 +171,15 @@ gulp.task('watch', gulp.parallel(tasks, () => {
 		'templates/*.pug'
 	], gulp.parallel('presentations', 'articles'));
 
-	gulp.watch(['static/styles/**/*.css'], gulp.series('styles'));
+	gulp.watch([
+		'static/styles/**/*.css',
+		'static/styles/**/*.scss'
+	], gulp.series('styles'));
+
+	gulp.watch([
+		'static/images/**'
+	], gulp.series('images'));
+
 	//gulp.watch(['static/scripts/**/*.js'], ['scripts']);
 }));
 

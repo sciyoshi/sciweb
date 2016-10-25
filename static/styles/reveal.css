@@ -1,10 +1,6 @@
 @import "reveal.js/css/reveal.css";
 @import "reveal.js/css/theme/night.css";
 
-body {
-	background: #333438;
-	background-color: #333438;
-}
 
 img.inline,
 .reveal section img.inline {
@@ -16,64 +12,7 @@ img.inline,
 	vertical-align: middle;
 }
 
-.hljs {
-	background: transparent;
-}
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-	color: #4DF69A;
-}
-
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-	color: #E591E4;
-}
-
-/*.hljs-symbol,
-.hljs-attribute,
-.hljs-params,
-.hljs-class .hljs-title,
-.hljs-code,*/
-.hljs-title,
-.hljs-section,
-.hljs-selector-class {
-	color: #2DCFF0;
-}
-
-.reveal {
-	color: white;
-}
-
-.reveal strong {
-	color: #4DF69A;
-}
-
-.reveal pre {
-	font-size: 0.8em;
-	line-height: 1.5;
-	padding: 0.5em;
-	background: #404144;
-}
-
-.reveal pre code {
-	max-height: 700px;
-}
-
-.reveal ul li {
-	margin-top: 0.5em;
-}
-
-.reveal > .slides > section,
-.reveal > .slides > section > section {
-	transform-style: flat;
-}
 
 .reveal code, .reveal pre {
 	font-family: 'Inconsolata', 'Consolas', monospace;

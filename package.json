@@ -13,6 +13,7 @@
     "gulp-postcss": "^6.2.0",
     "gulp-pug": "^3.1.0",
     "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "merge-stream": "^1.0.0",
@@ -24,7 +25,8 @@
   },
   "scripts": {
     "build": "gulp",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "start": "docker run -v $PWD/build:/var/www -p 80:80 --rm -it sciweb"
   },
   "dependencies": {
     "reveal.js": "^3.3.0"

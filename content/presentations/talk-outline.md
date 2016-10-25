@@ -37,13 +37,14 @@ And as an enthusiastic but inexperienced programmer, I tried to create the best 
 			exec definition
 
 
-Today I'm going to 
-
-
 
 I love Python, but I think there are good reasons to learn a variety of languages, and Rust in particular is a language that I am really excited about because of a number of its unique features.
 
 By the end of this talk, I hope you will have an appreciation of the novel concepts that Rust provides, as well as an understanding of how you can use it alongside Python to speed up your code.
+
+(OUTLINE)
+
+I will present a very short introduction to the Rust language, and highlight what are for me its two most exciting features: its type system, and the concept of ownership. I'll then use these concepts to show you how to write a simple extension module in Rust.
 
 ### Background
 
@@ -65,7 +66,13 @@ Programming languages can be a contentious issue, like text editors or indentati
 
 ### Overview
 
-Rust is a systems programming language that was announced by Mozilla in 2010. I first heard about Rust in 2014 when version 0.10 was announced. I took a brief look at it then, but when I looked at the tutorial I saw three different types of pointers, and saw that there were keywords being changed and removed, and thought to myself, maybe it's an interesting language but I don't have the time or see the value in learning it, so I didn't pay any more attention to it. Fast forward to August 2015, when I saw the release of Rust 1.0. I figured I should find out what the fuss was about - why so many people were excited about this language that to me as an newcomer just looked like a cleaned up version of C. So I sat down over a weekend to go through the tutorial, and my thinking changed completely. It had come a long way from the previous year, and what I saw was a really beautifully and cohesively designed language with a lot of really powerful features, a few of which I'll talk about today. What really sold me on Rust were two features in particular, the type system, and the concept of ownership and borrowing. I'll talk about these two in more detail, but first lets look at the basics of the syntax to get a feel for the language.
+(REWORK?)
+
+Rust is a systems programming language that was announced by Mozilla in 2010. I first heard about Rust in 2014 when version 0.10 was announced. I took a brief look at it then, but when I looked at the tutorial I saw three different types of pointers, and saw that there were keywords being changed and removed, and thought to myself, maybe it's an interesting language but I don't have the time or see the value in learning it, so I didn't pay any more attention to it. Fast forward to August 2015, when I saw the release of Rust 1.0. I figured I should find out what the fuss was about - why so many people were excited about this language that to me as an newcomer just looked like a cleaned up version of C. So I sat down over a weekend to go through the tutorial, and my thinking changed completely. It had come a long way from the previous year, and what I saw was a really beautifully and cohesively designed language with a lot of really powerful features, a few of which I'll talk about today.
+
+Rust provides memory safety guarantees, data-race freedom, and high-level abstractions while still offering efficiency and low-level control.
+
+First lets look at the basics of the syntax to get a feel for the language.
 
 ### Basics
 
@@ -92,10 +99,10 @@ Let's look at another example. Here's a function which takes a list of floating 
 			total += *el;
 		}
 
-		return total / list.len() as f64;
+		total / list.len() as f64
 	}
 
-The function then creates a mutable variable called `total`, and loops through each element in the slice, adding it to the total. It the returns the average by dividing by the length of the slice.
+The function then creates a mutable variable called `total`, and loops through each element in the slice, adding it to the total. It the returns the average by dividing by the length of the slice. Notice that there's no explicit `return` keyword - in Rust, the value of the last expression in a function is automatically returned.
 
 If you're familiar with C, you can think of this function as taking a pointer to an array of 64-bit floating point values. Iterating through the array gives you successive pointers to each element, which you need to dereference to get their value.
 
@@ -109,7 +116,7 @@ Not only is this easier to read, but by being more descriptive than prescriptive
 	fn avg(list: &[f64]) -> f64 {
 		let total: f64 = list.iter().sum();
 
-		return total / list.len() as f64;
+		total / list.len() as f64
 	}
 
 Here we are converting the slice into an iterator, and asking for its sum as a floating point value. This code returns the same result as before, but it's shorter and easier to understand. There's a third way we could right this function, and that is by using a fold operator, which might be more familiar to some of you as reduce, the operator that was removed in Python 3. Here's how that would look:
@@ -117,7 +124,7 @@ Here we are converting the slice into an iterator, and asking for its sum as a f
 	fn avg(list: &[f64]) -> f64 {
 		let total: f64 = list.iter().fold(0., |a, b| a + b);
 
-		return total / list.len() as f64;
+		total / list.len() as f64
 	}
 
 This is saying to start with the value 0 and successively add items from the list. The new syntax is called a closure, which is similar to a lambda in Python, and this represents the binary operation of addition. One of Rust's most compelling features is that is has these first-class functions, meaning you can pass functions as arguments or use them as return values, so it feels like a functional language. But what makes Rust unique here is that in many of the typical scenarios where you would use closures, the compiler is actually able to optimize away these calls to nothing. That means zero allocations and zero runtime indirection. In Python, unless you have a good JITting interpreter, this style of code normally has significant performance overhead. But in Rust, these all run at the same speed, and to prove this to you, I benchmarked all three versions against arrays of a million numbers:
@@ -135,28 +142,46 @@ This is an example of Rust's philosophy of "zero-cost abstractions".
 
 ### Type System
 
-So now that you hopefully have a basic idea of what Rust code looks like, I want to talk about my two favorite features in Rust.
+So now that you hopefully have a basic idea of what Rust code looks like, I want to talk about my two favorite features in Rust, the ones that I'm really excited about. The first is Rust's type system.
 
+Now from my observation over over the past few years, I feel like there's been a trend of languages moving towards strong or stronger typing. That's the case for Python - the 2016 PyCon keynote was an announcement of Mypy, a type-checking tool for Python 3.5. That's also been the case in the Javascript world, where languages like TypeScript and Elm, and the Flow type-checker from Facebook have all been gaining popularity. The appeal of strong type checking is that you can prevent a large class of runtime errors from ever happening.
 
-	#include <stdio.h>
+Rust provides all of the basic types you would expect, and the standard library has a number of solid container implementations.
 
-	static char *hello = "Hello world!";
+Structs are similar to ones in C
 
-	int main() {
-		hello[0] = 'C';
+Struct
 
-		printf("%s\n", hello);
-	}
+*talk about nulls*
 
-One of my favorite features of Rust is its strong type system. 
+#### Traits
 
-Traits
+Rust's type system will seem a bit unfamiliar at first if you're used to object-oriented languages. In OOP, classes and inheritance are a means of achieving code reuse and polymorphism. But Rust doesn't have classes, and it instead achieves these using a different concept called traits.
+
+Traits are essentially a collection of methods. They are conceptually similar to interfaces in C# and Java, but serve a much more fundamental role. Traits can be used as markers of specific functionality, for overloading operators, for bounds on generic functions, and even for dynamic dispatch.
+
+Let's look at an example. In Python, when you declare a class, the methods are defined directly within its body and are associated to it.
+
+In Rust, method and trait implementations are defined separately from the type itself. So first we would declare a type ()
+
+You can think of traits as protocols or interfaces that types can implement to indicate behavior.
+
 
 ### Ownership and Borrowing
 
+The second part of Rust that really excites me is its ownership system. I mentioned before that Rust guarantees memory safety and prevents data races, and the way it does that is through ownership.
+
+Python is a garbage collected language, and it uses reference counting to determine when objects are no longer accessible and can be freed. Rust, on the other hand, doesn't have a garbage collector, but it is still able to manage memory automatically!
+
+
+
+To understand it
+C code has a managed
 
 
 ## Extending Python (8 mins)
+
+
 
 rust-cpython
 

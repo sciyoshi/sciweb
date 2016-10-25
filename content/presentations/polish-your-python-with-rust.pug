@@ -2,33 +2,27 @@
 title: Polish Your Python With Rust
 ---
 
-section
-	h2.
+section(data-background-image="/static/images/binding_dark.png", data-background-size="200px 200px" data-background-repeat="repeat", data-background-transition="slide")
+	h2(style="color: white;").
 		Polish Your
 		#[img.inline(style="width: 1.5em; height: 1.5em;", src="polish-your-python-with-rust/python.svg")]
 		With
 		#[img.inline(style="width: 1.5em; height: 1.5em;", src="polish-your-python-with-rust/rust.svg")]
 
 section
-	h2 Background
-
-section
 	blockquote A language that doesn't affect the way you think about programming, is not worth knowing.
+	cite &mdash; Alan Perlis
 
 section
 	pre: code.python.
 		class Facebook(object):
 			_methods = ['friends.get', ...]
 
-			for method_name in _methods:
-				signature = 'def ' + method_name.replace('.', '_') + '(self'
-
+			for method in _methods:
+				signature = 'def ' + method.replace('.', '_') + '(self'
 				# ... snip ...
-
-				body += indent2 + 'return self._call_method("facebook.' + method_name + '"'
-
+				body += indent2 + 'return self._call("facebook.' + method + '"'
 				definition = signature + body
-
 				exec definition
 
 
@@ -46,11 +40,11 @@ section
 		li Zero-cost abstractions
 
 section
-	pre: code.rust.
-		fn main() {
-			let greet = "world";
+	pre: code.rust(data-trim).
+		#[mark.fragment.highlight-current-background-gray fn main() {]
+			#[mark.fragment.highlight-current-background-gray let greet = "world";]
 
-			println!("Hello, {}!", greet);
+			#[mark.fragment.highlight-current-background-gray println!("Hello, {}!", greet);]
 		}
 
 section
@@ -60,6 +54,122 @@ section
 		Hello, world!
 
 section
+	h2 Types and Traits
+
+section
+	h2 Primitive Types
+	ul
+		li #[code.rust bool]
+		li #[code.rust char]
+		li #[code.rust i8/i16/i32/i64/isize]
+		li #[code.rust u8/u16/u32/u64/usize]
+		li #[code.rust f32/f64]
+
+section
+	h2 Primitive Types (cont)
+	ul
+		li Tuples: #[code.rust (A, B, ...)]
+		li Arrays: #[code.rust &#91;T; N&#93;]
+		li Slices: #[code.rust &amp;&#91;T&#93;]
+		li Strings: #[code.rust &amp;str]
+		li Functions: #[code.rust fn(A, B, ...) -&gt; X]
+
+section
+	pre: code.rust.
+		#[mark.fragment.highlight-current-background-gray struct Rect {]
+			#[mark.fragment.highlight-current-background-gray width: f64,]
+			#[mark.fragment.highlight-current-background-gray height: f64]
+		}
+
+		let r = Rect { width: 3.0, height: 5.0 };
+
+section
+	h2 Traits
+
+section
+	pre: code.python.
+		@attr.s
+		class Person:
+			name = attr.ib()
+
+			def greeting(self):
+				return "Hello {}!".format(self.name)
+
+section
+	pre: code.rust.
+		struct Person {
+			name: String
+		}
+
+		impl Person {
+			fn greeting(&amp;self) -&gt; String {
+				format!("Hello {}!", self.name)
+			}
+		}
+
+section
+	pre: code.python.
+		class Pet:
+			def talk(self):
+				pass
+
+			def yell(self):
+				return self.talk().upper()
+
+		class Cat(Pet):
+			def talk(self):
+				return "meow"
+
+		class Dog(Pet):
+			def talk(self):
+				return "woof"
+
+section
+	h2 Defining a Trait
+	pre: code.rust.
+		trait Shape {
+			fn area(&amp;self) -&gt; f64;
+		}
+
+section
+	h2 Implementing Traits
+	pre: code.rust.
+		struct Rect {
+			width: f64,
+			height: f64
+		}
+
+		impl Shape for Rect {
+			fn area(&amp;self) -&gt; f64 {
+				self.width * self.height
+			}
+		}
+
+		struct Circle {
+			radius: f64
+		}
+
+		impl Shape for Circle {
+			fn area(&amp;self) -&gt; f64 {
+				std::f64::consts::PI * self.radius * self.radius
+			}
+		}
+
+section
+	h2 Using Traits
+	pre: code.rust.
+		let r = Rect { width: 3.0, height: 5.0 };
+
+		r.area(); // Shape must be imported!
+
+		Shape::area(&amp;r);
+
+section
+	h2 Ownership and Borrowing
+
+
+
+section
 	h2 Extending Python
 
 
@@ -67,37 +177,4 @@ section
 	sources:
 	tools: Ashim D’Silva @randomlies
 	road: Antonio Grosz @angro
-
-
-//
-	Python moving towards strong typing.
-	Grabber
-
-	C LOC
-
-	Python: 296k (479k Python)
-	NSS: 550k
-	OpenSSL: 285k
-	LZMA: 23k
-	MPDecimal: 15k
-	BZIP: 5k
-
-
-
-	Background
-
-	- Why another language?
-
-	  Can't python do everything?
-
-	My History
-
-	Release 0.10 in 2014
-
-	Rust 1.0 announced in 2015
-
-	- Quote
-
-	A language that doesn't affect the way you think about programming, is not worth knowing.
-	New concepts: ownership and traits
 
