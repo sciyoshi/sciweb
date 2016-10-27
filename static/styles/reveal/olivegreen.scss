@@ -31,7 +31,38 @@ $mainColor: #222;
 	transform-style: flat;
 }
 
+.hljs {
+	background-color: transparent;
+}
+
+.hljs-error,
+.hljs-error .hljs-comment {
+	color: #a00;
+	font-weight: bold;
+}
+
+.hljs-green {
+	color: #718c00;
+}
+
+.hljs-cyan {
+	color: #4271ae;
+}
+
 .reveal .slides section {
+	.photo-credits {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		font-size: 0.6em;
+		color: rgba(255, 255, 255, 0.5);
+
+		.email {
+			font-size: 0.8em;
+			color: rgba(255, 255, 255, 0.3);
+		}
+	}
+
 	img.inline {
 		border: none;
 		background: transparent;
@@ -39,10 +70,6 @@ $mainColor: #222;
 		box-shadow: none;
 		display: inline-block;
 		vertical-align: middle;
-	}
-
-	strong {
-		color: #4DF69A;
 	}
 
 	blockquote {
@@ -67,6 +94,10 @@ $mainColor: #222;
 		line-height: 1.5;
 		padding: 0.5em;
 
+		&.center {
+			text-align: center;
+		}
+
 		code {
 			max-height: 750px;
 		}
@@ -78,10 +109,11 @@ $mainColor: #222;
 			border-radius: 5px;
 			color: inherit;
 			background: transparent;
+			position: relative;
 		}
 	}
 
-	ul li {
+	ul li, ol li {
 		margin-top: 0.5em;
 	}
 
@@ -90,8 +122,9 @@ $mainColor: #222;
 		visibility: visible;
 
 		&.current-fragment {
-			background: #eee;
+			background: rgba(230, 230, 230, 0.6);
 			border-color: #ddd;
+			font-weight: bolder;
 		}
 	}
 }

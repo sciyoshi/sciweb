@@ -16,16 +16,12 @@ html
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/languages/rust.min.js")
 		script(type="text/javascript").
+			hljs.initHighlightingOnLoad();
 			Reveal.initialize({
 				transition: 'none',
+				viewDistance: 3,
 				dependencies: [{
-					src: '/static/scripts/highlight.js',
-					async: true,
-					callback: function() {
-						hljs.initHighlightingOnLoad();
-					}
-				}, {
-					src: '/static/scripts/notes.js',
+					src: '/static/scripts/reveal/plugin/notes/notes.js',
 					async: true
 				}]
 			});

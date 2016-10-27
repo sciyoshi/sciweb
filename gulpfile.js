@@ -118,13 +118,18 @@ gulp.task('presentations', () => {
 		.pipe(gulp.dest('build/content/presentations'));
 });
 
-gulp.task('scripts', () =>
-	gulp.src(['node_modules/reveal.js/js/reveal.js', 'static/scripts/**.js'])
+gulp.task('scripts', () => {
+	let reveal = gulp.src(['node_modules/reveal.js/plugin/**'])
+		.pipe(gulp.dest('build/static/scripts/reveal/plugin/'));
+
+	let scripts = gulp.src(['node_modules/reveal.js/js/reveal.js', 'static/scripts/**.js'])
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest('build/static/scripts/'))
-);
+		.pipe(gulp.dest('build/static/scripts/'));
+
+	return merge(reveal, scripts);
+});
 
 gulp.task('images', () =>
 	gulp.src(['static/images/**'])
