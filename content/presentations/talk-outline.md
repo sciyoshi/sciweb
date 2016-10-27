@@ -20,15 +20,12 @@ Today I'd like to talk about why, of all the existing languages, Rust is the one
 
 Let me start with a bit of background.
 
-I've been programming in Python now for over 10 years, mainly building web software. When I first learned it, coming from C and C#, I was amazed by how expressive the language was and how good it felt to use. I fell in love with Python as soon as I learned it, and it's stayed as my favorite language since. In a way, I feel like we've grown up together.
+I've been programming in Python now for over 10 years, mainly building web software. When I first learned it, coming from C and C#, I was amazed by how expressive the language was and how good it felt to use. I fell in love with Python as soon as I learned it, and it's stayed as my favorite language since.
 
-In 2006, I released my first ever open source project called PyFacebook, which was the first Python client for Facebook's newly-released API. 
+Today, Python is better than ever
 
-And as an enthusiastic but inexperienced programmer, I tried to create the best and cleverest code I could using all of the exciting dynamic features that Python offered. And I ended up with this:
+But Python has also come a long way in those 10 years since version 2.3 - Pycon attendance has gone up 10-fold since then. As you know, Python lets you express powerful ideas in a short amount of code, making it easy to write, and even more importantly easier to read and understand. Python today has a mature ecosystem, and powerful libraries for doing almost anything you can think of - machine learning, image processing, you name it, there's probably a way to do it in Python. And we have a passionate, diverse, and welcoming community, as shown by all of you here today.
 
-Looking back at that code now, I can see how far I've come as a programmer.
-
-But Python has also come a long way in those 10 years since version 2.3 - Pycon attendance has gone up 10-fold since then, and the language is better than ever. As you know, Python lets you express powerful ideas in a short amount of code, making it easy to write, and even more importantly easier to read and understand. Python today has a mature ecosystem, and powerful libraries for doing almost anything you can think of - machine learning, image processing, you name it, there's probably a way to do it in Python. And we have a passionate, diverse, and welcoming community, as shown by all of you here today.
 
 So if I'm such an advocate for Python, why am I here talking to you about Rust? If Python can already do anything we need it to, what's the use of learning another language? I think there are a few good reasons.
 
@@ -40,16 +37,30 @@ And lastly: it's fun! As an engineer I get excited by trying out new tools and t
 
 Programming languages can be a contentious issue, like text editors or indentation. If you're already familiar with Python and looking to go deeper, in my opinion Rust is one of the best to learn next. Even if you never write in Rust or any other language, the knowledge can transfer and help you in your work.
 
-### Overview
-
 (REWORK THIS PARAGRAPH?)
+
+I first started hearing about Rust in 2014. And at the time I was mostly working on large Python and Javascript codebases that unfortunately didn't have much test coverage. We would constantly see errors in our server logs that looked like [THIS]. Granted, Python 3 has helped with the Unicode issue, but the experience of seeing these types of errors in production made me really appreciate the value of things like static type systems. 
+
+The other thing I learned was that just because you're able to do something
+doesn't mean it's a good idea. In 2006, I released my first ever open source project called PyFacebook, which was the first Python client for Facebook's newly-released API. 
+
+And as an enthusiastic but inexperienced programmer, I tried to create the best and cleverest code I could using all of the exciting dynamic features that Python offered. And I ended up with this:
+
+Looking back at that code now, I can see how far I've come as a programmer.
+
 
 Rust was originally announced by Mozilla in 2010. I first heard about Rust in 2014 when version 0.10 was announced. I took a brief look at it then, but when I looked at the tutorial I saw three different types of pointers, and saw that there were keywords being changed and removed, and thought to myself, maybe it's an interesting language but I don't have the time or see the value in learning it, so I didn't pay any more attention to it. Fast forward to August 2015, when I saw the release of Rust 1.0. I figured I should find out what the fuss was about - why so many people were excited about this language that to me as an newcomer just looked like a cleaned up version of C. So I sat down over a weekend to go through the tutorial, and my thinking changed completely. It had come a long way from the previous year, and what I saw was a really beautifully and cohesively designed language with a lot of really powerful features, a few of which I'll talk about today.
 
+
+
+
+
 Rust provides memory safety guarantees, data-race freedom, and high-level abstractions while still offering efficiency and low-level control.
 
-
 Python is a garbage collected language, and it uses reference counting to determine when objects are no longer accessible and can be freed. Rust, on the other hand, doesn't have a garbage collector, but it is still able to manage memory automatically!
+
+
+
 
 First lets look at the basics of the syntax to get a feel for the language.
 
