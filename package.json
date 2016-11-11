@@ -29,6 +29,7 @@
     "start": "docker run -v $PWD/build:/var/www -p 80:80 --rm -it sciweb"
   },
   "dependencies": {
+    "gulp-sass": "^2.3.2",
     "reveal.js": "^3.3.0"
   }
 }

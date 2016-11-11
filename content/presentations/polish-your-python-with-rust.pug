@@ -39,7 +39,7 @@ section(data-background="polish-your-python-with-rust/heart.jpg")
 		div.email szmigieldesign.pl
 
 	aside.notes: ul
-		li Python for 10 years, coming from C/#, fell in love
+		li Python for 10 years, coming from C/#, amazed with functionality, fell in love
 		li Better than ever, powerful language, mature ecosystem, welcoming/diverse/passionate community
 
 section
@@ -106,10 +106,10 @@ section
 section
 	h3 Rust's Killer Features
 	ul
-		li Strong type system
-		li Memory safety
-		li Freedom from data races
-		li Zero-cost abstractions
+		li.fragment Strong type system
+		li.fragment Memory safety
+		li.fragment Freedom from data races
+		li.fragment Zero-cost abstractions
 
 	aside.notes: ul
 		li PyCon 2016 keynote was announcement of Mypy
@@ -134,6 +134,12 @@ section
 			#[+mark('println!("Hello, {}!", greet);')]
 		}
 
+	aside.notes: ul
+		li main called on startup
+		li immutable by default
+		li type inference for greet
+		li macro system works on asts
+
 section
 	pre: code.rust(data-trim).
 		#[+mark('fn avg(list: &[f64]) -> f64 {')]
@@ -146,10 +152,21 @@ section
 			#[+mark('total / list.len() as f64')]
 		}
 
+	aside.notes: ul
+		li functions need types
+		li loop needs to dereference, like pointer
+		li last value automatically returned
+		li this is imperative style, telling computer what to do
+		li high level languages provide abstractions
+		li frees the interpreter to decide on an execution plan
+
 section
 	pre: code.python(data-trim).
 		def avg(items):
 			return sum(items) / len(items)
+
+	aside.notes: ul
+		li how you would do this in python
 
 section
 	h3 Pythonic Version
@@ -158,6 +175,11 @@ section
 			list#[+mark('.iter()')]#[+mark('.sum::<f64>()')] / list.len() as f64
 		}
 
+	aside.notes: ul
+		li converting to an iterator
+		li asking for a sum
+		li benefit: easier to parallelize
+
 section
 	h3 Parallel Version! (Rayon)
 	pre: code.rust(data-trim).
@@ -165,12 +187,24 @@ section
 			list#[+mark('.par_iter()')].sum::&lt;f64&gt;() / list.len() as f64
 		}
 
+	aside.notes: ul
+		li library called rayon
+		li provides optimistic parallelism
+		li decision to parallelize is made dynamically based on core utilization
+
 section
 	h3 Reduce
 	pre: code.rust(data-trim).
 		fn avg(list: &amp;[f64]) -&gt; f64 {
 			list.iter().fold(#[+mark('0.')], #[+mark('|a, b| a + b')]) / list.len() as f64
 		}
+
+	aside.notes: ul
+		li last way of doing average
+		li fold, also known as reduce, removed from python 3
+		li second argument is a closure
+		li normally causes overhead
+		li LLVM can optimize this away to nothing
 
 section
 	h3 Benchmark
@@ -199,6 +233,12 @@ section
 		li #[code.rust u8/u16/u32/u64/usize]
 		li #[code.rust f32/f64]
 
+	aside.notes: ul
+		li already saw floating point
+		li rust forces bools when doing ifs
+		li c has problems when checking return values like -1
+		li char is a 4-byte unicode code point
+
 section
 	h3 Primitive Types (cont)
 	ul
@@ -208,12 +248,21 @@ section
 		li Strings: #[code.rust &amp;str]
 		li Functions: #[code.rust fn(A, B, ...) -&gt; X]
 
+	aside.notes: ul
+		li more complex types, like tuples
+		li arrays are stored on the stack, length is part of the type information
+
 section
 	pre: code.rust.
 		struct Rect {
 			width: f64,
 			height: f64
 		}
+
+	aside.notes: ul
+		li basic way of creating complex data structures is a struct
+		li no guarantee on layout of fields
+		li only data, no methods
 
 section
 	h3 Python Class
@@ -225,6 +274,9 @@ section
 			def greeting(self):
 				return "Hello {}!".format(self.name)
 
+	aside.notes: ul
+		li using great attr library
+
 section
 	h3 Rust "Class"
 	pre: code.rust.
@@ -232,38 +284,51 @@ section
 			name: String
 		}
 
-		impl Person {
-			fn greeting(&amp;self) -&gt; String {
+		#[+mark('impl Person')] {
+			fn greeting(#[+mark('&self')]) -&gt; String {
 				format!("Hello {}!", self.name)
 			}
 		}
 
-section
-	h3 Traits
+	aside.notes: ul
+		li struct is separate from implementation
+		li inherent impl, methods can be used from anywhere
+		li self is explicit, immutable by default
 
 section
-	pre: code.python.
-		class Pet:
-			def talk(self):
-				pass
+	h2 Traits
 
-			def yell(self):
-				return self.talk().upper()
-
-		class Cat(Pet):
-			def talk(self):
-				return "meow"
-
-		class Dog(Pet):
-			def talk(self):
-				return "woof"
+	aside.notes: ul
+		li collection of methods
+		li similar to interfaces
+		li used for operator overloading
+		li indicator of behavior, like copy or sync
+		li used as bounds on generic type signatures
+		li can be generic themselves
+		li allow for dynamic dispatch
 
 section
 	h3 Defining a Trait
 	pre: code.rust.
-		trait Pet {
-			fn area(&amp;self) -&gt; f64;
+		#[+mark('trait Named')] {
+			fn name(&amp;self) -&gt; String;
 		}
+
+	aside.notes: ul
+		li defining method signatures
+		li not like duck-typing in python, must be explicitly implemented
+
+section
+	h3 Using a Trait
+	pre: code.rust.
+		#[+mark('impl Named for Person')] {
+			fn name(&amp;self) -&gt; String {
+				self.name#[+mark('.clone()')]
+			}
+		}
+
+	aside.notes: ul
+		li why clone? we'll see in ownership
 
 section
 	h2 Ownership and Borrowing
@@ -278,42 +343,47 @@ section
 			#[span.fragment println!("{:?}", v);] #[span.fragment // #[span.hljs-error ERROR: use of moved value: `v`]]
 		}
 
+	aside.notes: ul
+		li vector created on heap, pointer on stack
+		li v has ownership of the resource
+		li assignment transfers ownership
+
 section
 	pre: code.rust.
-		fn print(v: Vec&lt;u32&gt;) {
+		fn print(#[+mark('v: Vec<u32>')]) {
 			println!("{:?}", v);
 		}
 
 		fn foo() {
 			let v = vec![1, 2, 3];
 
-			print(v);
+			#[+mark('print(v)')];
 			print(v); #[span.fragment // #[span.hljs-error ERROR: use of moved value: `v`]]
 		}
 
 section
 	pre: code.rust.
-		fn print(v: &amp;Vec&lt;u32&gt;) {
+		fn print(#[+mark('v: &Vec<u32>')]) {
 			println!("{:?}", v);
 		}
 
 		fn foo() {
 			let v = vec![1, 2, 3];
 
-			print(&amp;v);
-			print(&amp;v); // OK
+			#[+mark('print(&v)')];
+			print(&amp;v); #[span.fragment // OK]
 		}
 
 section
 	pre: code.rust.
-		fn add_one(v: &amp;mut Vec&lt;u32&gt;) {
+		fn add_one(#[+mark('v: &mut Vec<u32>')]) {
 			v.push_back(1)
 		}
 
 		fn foo() {
 			let mut v = vec![1, 2, 3];
 
-			add_one(&amp;mut v);
+			add_one(#[+mark('&mut v')]);
 		}
 
 section
@@ -330,11 +400,24 @@ section
 		}	                 #[span.fragment(data-fragment-index="0") // #[span.hljs-error it is also borrowed as immutable]]
 
 section
-	h2 Extending Python
+	h2 Python + Rust
 
 section
-	h2 Conclusion
+	h3 Extending Python
+	ul
+		li CFFI
+		li CPython Bindings
 
+	aside.notes: ul
+		li cffi - works with any interpreter, code doesn't have access to python datastructures
+		li bindings - can use interpreter functions, but cpython specific (maybe pypy)
+
+section
+	h2 Thank You!
+	ul
+		li The <strong>Rust Book</strong>: https://doc.rust-lang.org/book/
+		li <strong>Online Playpen</strong>: https://play.rust-lang.org/
+		li <strong>Rust CPython Bindings</strong>: https://github.com/dgrunwald/rust-cpython
 
 //
 	sources:
