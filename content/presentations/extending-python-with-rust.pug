@@ -1,0 +1,500 @@
+---
+title: Extending Python With Rust
+---
+
+//
+	Intro: 1 min
+	Why Rust: 2 min
+	Intro to Rust: 5 min
+	Types: 5 min
+	Ownership: 5 min
+	Demo: 7 min
+
+mixin mark(code)
+	mark.fragment.highlight-current-background-gray= code
+
+section(data-background-image="/static/images/binding_dark.png", data-background-size="200px 200px" data-background-repeat="repeat", data-background-transition="none")
+	h2(style="color: white;").
+		Extending
+		#[img.inline(style="width: 1.5em; height: 1.5em;", src="extending-python-with-rust/python.svg")]
+		With
+		#[img.inline(style="width: 1.5em; height: 1.5em;", src="extending-python-with-rust/rust.svg")]
+
+section
+	blockquote A language that doesn't affect the way you think about programming, is not worth knowing.
+	cite &mdash; Alan Perlis
+
+	aside.notes: ul
+		li first recipient of Turing award
+		li Rust changed my thinking
+		li systems language: speed/control of C, safety/expressive power of Python
+
+section
+	ol
+		li Why Rust?
+		li Intro to Rust
+		li Type System
+		li Ownership and Borrowing
+		li Python #[span(style="color: #E90004;") ❤] Rust
+		li.fragment ????
+		li.fragment Profit!!!!
+
+section(data-background="extending-python-with-rust/heart.jpg")
+	// https://unsplash.com/photos/Nzyz7cRviPo
+
+	div.photo-credits
+		div Lukasz Szmigiel
+		div.email szmigieldesign.pl
+
+	aside.notes: ul
+		li using Python for 10 years
+		li coming from C/#, amazed with easy-to-use and powerful
+		li fell in love, favorite language since
+		li mature ecosystem - library for achieving almost any task
+		li welcoming/diverse/passionate community, proud to be a part of
+
+section
+	h3 Why Learn?
+	ul
+		li.fragment Deepen your understanding
+		li.fragment Expand your toolbelt
+		li.fragment ... it's #[strong FUN]!
+
+	aside.notes: ul
+		li Deepen knowledge of the theory of programming
+		li As good as Python is, not always right tool
+		li Armin Ronacher, Sentry - replace sourcemap parsing
+		li It's rewarding - applying new techniques and ideas to solve real-world problems
+
+//
+	section
+		pre.fragment.center: code.nohighlight(data-trim).
+			#[span.hljs-error AttributeError]: #[span.hljs-string 'NoneType'] object has no attribute #[span.hljs-string 'get_profile']
+
+		pre.fragment.center: code.nohighlight(data-trim).
+			#[span.hljs-error TypeError]: #[span.hljs-string 'int'] object has no attribute #[span.hljs-string '__getitem__']
+
+		pre.fragment.center: code.nohighlight(data-trim).
+			#[span.hljs-error UnicodeDecodeError]: #[span.hljs-string 'ascii'] codec can't decode byte #[span.hljs-number 0xc3]
+			in position #[span.hljs-number 24]: ordinal not in range(#[span.hljs-number 128])
+
+		aside.notes: ul
+			li Heard about Rust in 2014
+			li Working mostly on large Python + JS codebases
+			li Unfortunately low test coverage
+			li Always saw errors
+			li Seeing in prod made me appreciate static type systems
+
+	section
+		h3 PyFacebook (circa 2006)
+		pre.fragment: code.python.
+			class Facebook(object):
+				_methods = ['friends.get', ...]
+
+				for method in _methods:
+					signature = 'def ' + method.replace('.', '_') + '(self'
+					# ... snip ...
+					body += indent2 + 'return self._call("facebook.' + method + '"'
+					definition = signature + body
+					exec definition
+
+		aside.notes: ul
+			li Just because you can, doesn't mean you should
+			li Released PyFacebook in 2006
+			li Being enthusiastic but inexperienced
+			li Never do this
+
+	section
+		img(src="extending-python-with-rust/rust-1.0.png")
+
+		aside.notes: ul
+			li When I saw announcement August 2015
+			li Decided to do the tutorial
+			li Amazing language with novel concepts
+
+section
+	h3 Rust's Killer Features
+	ul
+		li.fragment Strong type system
+		li.fragment Memory safety
+		li.fragment Freedom from data races
+		li.fragment Zero-cost abstractions
+
+	aside.notes: ul
+		li Rust has strong typing from the ground up
+		li PyCon 2016 keynote was announcement of Mypy
+		li JS moving towards TypeScript, Elm, and Flow
+		li Memory safety without a garbage collector
+		li Type system guarantees that there are no null pointers or use-after-free
+		li Concurrent tasks cannot share mutable state without synchronization
+		li Guaranteed by the type system
+		li Rust provides iterators, closures, pattern matching
+		li Compiled by LLVM, good optimization
+		li Already familiar + looking to go deeper? Rust is best to learn next
+		li Even if you never write, knowledge can transfer and help
+
+section
+	h2 Intro to Rust
+
+	aside.notes: ul
+		li 5 mins
+
+section
+	h3 Hello Rust
+	pre: code.rust(data-trim).
+		#[+mark('fn main() {')]
+			#[+mark('let greet = "world";')]
+
+			#[+mark('println!("Hello, {}!", greet);')]
+		}
+
+	aside.notes: ul
+		li main called on startup
+		li immutable by default
+		li type inference for greet
+		li macro system works on asts
+
+section
+	pre: code.rust(data-trim).
+		#[+mark('fn avg(list: &[f64]) -> f64 {')]
+			#[+mark('let mut total = 0.;')]
+
+			#[+mark('for el in list')] {
+				total += #[+mark('*el')];
+			}
+
+			#[+mark('total / list.len() as f64')]
+		}
+
+	aside.notes: ul
+		li functions need types
+		li loop needs to dereference, like pointer
+		li last value automatically returned
+		li this is imperative style, telling computer what to do
+		li high level languages provide abstractions
+		li frees the interpreter to decide on an execution plan
+
+section
+	pre: code.python(data-trim).
+		def avg(items):
+			return sum(items) / len(items)
+
+	aside.notes: ul
+		li how you would do this in python
+
+section
+	h3 Pythonic Version
+	pre: code.rust(data-trim).
+		fn avg(list: &amp;[f64]) -&gt; f64 {
+			list#[+mark('.iter()')]#[+mark('.sum::<f64>()')] / list.len() as f64
+		}
+
+	aside.notes: ul
+		li converting to an iterator
+		li asking for a sum
+		li benefit: easier to parallelize
+
+section
+	h3 Parallel Version! (Rayon)
+	pre: code.rust(data-trim).
+		fn avg(list: &amp;[f64]) -&gt; f64 {
+			list#[+mark('.par_iter()')].sum::&lt;f64&gt;() / list.len() as f64
+		}
+
+	aside.notes: ul
+		li library called rayon
+		li provides optimistic parallelism
+		li decision to parallelize is made dynamically based on core utilization
+
+section
+	h3 Reduce
+	pre: code.rust(data-trim).
+		fn avg(list: &amp;[f64]) -&gt; f64 {
+			list.iter().fold(#[+mark('0.')], #[+mark('|a, b| a + b')]) / list.len() as f64
+		}
+
+	aside.notes: ul
+		li last way of doing average
+		li fold, also known as reduce, removed from python 3
+		li second argument is a closure
+		li normally causes overhead
+		li LLVM can optimize this away to nothing
+
+section
+	h3 Benchmark
+	pre: code.nohighlight.
+		#[span.hljs-green λ] cargo bench
+		    #[span.hljs-green Finished] release [optimized] target(s) in 0.0 secs
+		     #[span.hljs-green Running] target/release/deps/bench-4033a5e20d93d9a3
+
+		running 4 tests
+		test tests::bench_avg      ... #[span.hljs-cyan bench]:     999,752 ns/iter (+/- 107,650)
+		test tests::bench_avg_fold ... #[span.hljs-cyan bench]:     970,091 ns/iter (+/- 97,401)
+		test tests::bench_avg_sum  ... #[span.hljs-cyan bench]:     993,396 ns/iter (+/- 103,159)
+		test tests::bench_avg_par  ... #[span.hljs-cyan bench]:     629,747 ns/iter (+/- 567,493)
+
+		test result: #[span.hljs-green ok]. 0 passed; 0 failed; 0 ignored; 4 measured
+
+section
+	h2 Types and Traits
+
+section
+	h3 Primitive Types
+	ul
+		li #[code.rust bool]
+		li #[code.rust char]
+		li #[code.rust i8/i16/i32/i64/isize]
+		li #[code.rust u8/u16/u32/u64/usize]
+		li #[code.rust f32/f64]
+
+	aside.notes: ul
+		li already saw floating point
+		li rust forces bools when doing ifs
+		li c has problems when checking return values like -1
+		li char is a 4-byte unicode code point
+
+section
+	h3 Primitive Types (cont)
+	ul
+		li Tuples: #[code.rust (A, B, ...)]
+		li Arrays: #[code.rust &#91;T; N&#93;]
+		li Slices: #[code.rust &amp;&#91;T&#93;]
+		li Strings: #[code.rust &amp;str]
+		li Functions: #[code.rust fn(A, B, ...) -&gt; X]
+
+	aside.notes: ul
+		li more complex types, like tuples
+		li arrays are stored on the stack, length is part of the type information
+
+section
+	pre: code.rust.
+		struct Rect {
+			width: f64,
+			height: f64
+		}
+
+	aside.notes: ul
+		li basic way of creating complex data structures is a struct
+		li only data, no methods
+
+section
+	h3 Python Class
+	pre: code.python.
+		@attr.s
+		class Person:
+			name = attr.ib()
+
+			def greeting(self):
+				return "Hello {}!".format(self.name)
+
+	aside.notes: ul
+		li using great attr library
+
+section
+	h3 Rust "Class"
+	pre: code.rust.
+		struct Person {
+			name: String
+		}
+
+		#[+mark('impl Person')] {
+			fn greeting(#[+mark('&self')]) -&gt; String {
+				format!("Hello {}!", self.name)
+			}
+		}
+
+	aside.notes: ul
+		li struct is separate from implementation
+		li inherent impl, methods can be used from anywhere
+		li self is explicit parameter, like Python
+
+section
+	h3 Traits
+	ul
+		li.fragment Operator overloading
+		li.fragment Indicator of behavior
+		li.fragment Bounds for generics
+		li.fragment Dynamic dispatch
+
+	aside.notes: ul
+		li coming from OOP (familiar with inheritance, polymorphism, encapsulation)
+		li collection of methods
+		li similar to interfaces
+		li used for operator overloading
+		li indicator of behavior, like copy or sync
+		li used as bounds on generic type signatures
+		li can be generic themselves
+		li allow for dynamic dispatch
+		li think as protocols
+
+section
+	h3 Defining a Trait
+	pre: code.rust.
+		#[+mark('trait Named')] {
+			#[+mark('fn name(&self) -> String;')]'
+		}
+
+	aside.notes: ul
+		li defining method signatures
+		li not like duck-typing in python, must be explicitly implemented
+
+section
+	h3 Using a Trait
+	pre: code.rust.
+		#[+mark('impl Named for Person')] {
+			fn name(&amp;self) -&gt; String {
+				self.name#[+mark('.clone()')]
+			}
+		}
+
+	aside.notes: ul
+		li why clone? we'll see in ownership
+
+section
+	h2 Ownership and Borrowing
+
+	aside.notes: ul
+		li most difficult part to learn and understand
+		li also most exciting, major breakthrough in language design
+		li you'll be fighting with the borrow checker
+		li guarantees memory safety / freedom from data races
+
+section
+	pre: code.rust.
+		fn foo() {
+			let v = vec![1, 2, 3];
+
+			#[span.fragment let w = v;]
+
+			#[span.fragment println!("{:?}", v);] #[span.fragment // #[span.hljs-error ERROR: use of moved value: `v`]]
+		}
+
+	aside.notes: ul
+		li vector created on heap, pointer on stack
+		li v has ownership of the resource
+		li assignment transfers ownership
+
+section
+	pre: code.rust.
+		fn print(#[+mark('v: Vec<u32>')]) {
+			println!("{:?}", v);
+		}
+
+		fn foo() {
+			let v = vec![1, 2, 3];
+
+			#[+mark('print(v)')];
+			print(v); #[span.fragment // #[span.hljs-error ERROR: use of moved value: `v`]]
+		}
+
+section
+	pre: code.rust.
+		fn print(#[+mark('v: &Vec<u32>')]) {
+			println!("{:?}", v);
+		}
+
+		fn foo() {
+			let v = vec![1, 2, 3];
+
+			#[+mark('print(&v)')];
+			print(&amp;v); #[span.fragment // OK]
+		}
+
+section
+	pre: code.rust.
+		fn add_one(#[+mark('v: &mut Vec<u32>')]) {
+			v.push_back(1)
+		}
+
+		fn foo() {
+			let mut v = vec![1, 2, 3];
+
+			add_one(#[+mark('&mut v')]);
+		}
+
+section
+	h3 Rules of Borrowing
+	ul
+		li.fragment Mutable borrows are exclusive
+		li.fragment Cannot outlive the object being borrowed
+
+	aside.notes: ul
+		li whenever a mutable borrow is active, no other borrows of the object are active
+		li compiler checks that the lifetime of a borrow is shorter
+
+section
+	h3 Mutable Borrows are Exclusive
+
+	pre: code.rust.
+		fn foo() {
+			let mut v = vec![1, 2, 3];
+
+			let borrow1 = &amp;v;
+			let borrow2 = &amp;v;
+			let borrow3 = &amp;v;
+
+			add_one(&amp;mut v); #[span.fragment(data-fragment-index="0") // #[span.hljs-error ERROR: cannot borrow `v` as mutable because]]
+		}	                 #[span.fragment(data-fragment-index="0") // #[span.hljs-error it is also borrowed as immutable]]
+
+section
+	h3 Lifetimes
+
+	pre: code.rust.
+		let #[+mark('outer')];
+
+		{
+			#[+mark('let v = 1;')]
+			#[+mark('outer = &v;')] #[span.fragment // #[span.hljs-error error: `v` does not live long enough]]
+		}
+
+		println!("{}", outer);
+
+section(data-background="extending-python-with-rust/workshop.jpg")
+	// https://unsplash.com/photos/TgWWeaTAXCM
+
+	div.photo-credits
+		div Leo Fosdal
+		div.email https://unsplash.com/@fozzie
+
+	aside.notes: ul
+		li using Python for 10 years
+		li coming from C/#, amazed with easy-to-use and powerful
+		li fell in love, favorite language since
+		li mature ecosystem - library for achieving almost any task
+		li welcoming/diverse/passionate community, proud to be a part of
+
+	aside.notes: ul
+		li based off a concept called substructural logic (weakening, no contraction)
+		li curry-howard isomorphism - equates proofs in logic with types
+		li corresponding type system known as an affine type system
+
+section
+	h2 Python + Rust
+
+section
+	h3 Extending Python
+	ul
+		li CFFI
+		li CPython Bindings
+
+	aside.notes: ul
+		li cffi - works with any interpreter, code doesn't have access to python datastructures
+		li bindings - can use interpreter functions, but cpython specific (maybe pypy)
+
+section
+	h2 Demo Time!
+
+section
+	h2 Thank You!
+	h4 @sciyoshi
+
+	ul
+		li The <strong>Rust Book</strong>: https://doc.rust-lang.org/book/
+		li <strong>Online Playpen</strong>: https://play.rust-lang.org/
+		li <strong>Rust CPython Bindings</strong>: https://github.com/dgrunwald/rust-cpython
+
+//
+	sources:
+	tools: Ashim D’Silva @randomlies
+	road: Antonio Grosz @angro
+

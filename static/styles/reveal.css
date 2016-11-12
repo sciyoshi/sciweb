@@ -1,7 +1,6 @@
 @import "reveal.js/css/reveal.css";
 @import "reveal.js/css/theme/night.css";
 
-
 img.inline,
 .reveal section img.inline {
 	border: none;
@@ -11,8 +10,6 @@ img.inline,
 	display: inline-block;
 	vertical-align: middle;
 }
-
-
 
 .reveal code, .reveal pre {
 	font-family: 'Inconsolata', 'Consolas', monospace;
