@@ -51,9 +51,9 @@ $mainColor: #222;
 
 .reveal .slides section {
 	.photo-credits {
-		position: fixed;
 		bottom: 0;
 		left: 0;
+		padding-top: 650px;
 		font-size: 0.6em;
 		color: rgba(255, 255, 255, 0.8);
 		text-align: left;
@@ -74,6 +74,15 @@ $mainColor: #222;
 		vertical-align: middle;
 	}
 
+	a {
+		color: #0788D9;
+		opacity: 0.9;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
 	blockquote {
 		font-size: 1.5em;
 		font-weight: 600;
@@ -85,7 +94,7 @@ $mainColor: #222;
 	}
 
 	code, pre {
-		font-family: 'Inconsolata', 'Consolas', monospace;
+		font-family: 'Inconsolata', 'Consolas', monospace !important;
 		tab-size: 2;
 		box-shadow: none;
 		max-height: 700px;
@@ -117,6 +126,12 @@ $mainColor: #222;
 
 	ul li, ol li {
 		margin-top: 0.5em;
+	}
+
+	span.light {
+		font-family: sans-serif;
+		font-weight: 300;
+		opacity: 0.3;
 	}
 
 	.fragment.highlight-current-background-gray {
