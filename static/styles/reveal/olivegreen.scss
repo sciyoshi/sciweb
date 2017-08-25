@@ -3,7 +3,7 @@
 @import "reveal.js/css/theme/template/mixins";
 @import "reveal.js/css/theme/template/settings";
 
-@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
 @import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
@@ -18,7 +18,7 @@ $linkColorHover: lighten( $linkColor, 20% );
 $headingFont: 'Montserrat', Impact, sans-serif;
 $headingColor: #111;
 $headingTextShadow: none;
-$headingLetterSpacing: -0.03em;
+$headingLetterSpacing: 0;
 $headingTextTransform: none;
 $selectionBackgroundColor: #e7ad52;
 $mainFontSize: 30px;
@@ -94,7 +94,7 @@ $mainColor: #222;
 	}
 
 	code, pre {
-		font-family: 'Inconsolata', 'Consolas', monospace !important;
+		font-family: 'Fira Code', 'Inconsolata', 'Consolas', monospace !important;
 		tab-size: 2;
 		box-shadow: none;
 		max-height: 700px;
@@ -143,5 +143,23 @@ $mainColor: #222;
 			border-color: #ddd;
 			font-weight: bolder;
 		}
+	}
+
+	.fragment.highlight-yellow,
+	.fragment.highlight-current-yellow {
+		opacity: 1;
+		visibility: inherit;
+	}
+
+	.fragment.highlight-yellow.visible,
+	.fragment.highlight-current-yellow.current-fragment {
+		fill: #F9BE00;
+		stroke: #F9BE00;
+	}
+
+	.fragment.highlight-purple.visible,
+	.fragment.highlight-current-purple.current-fragment {
+		fill: purple;
+		stroke: purple;
 	}
 }
