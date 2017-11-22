@@ -7,4 +7,4 @@ block main
 			h2: a(href=article.url) #{article.title}
 			div.description #{article.description}
 
-	a(href="?page=#{next}") Next
+	a(href=`?page=${next}`) Next

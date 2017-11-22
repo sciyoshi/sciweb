@@ -1,4 +1,8 @@
 doctype html
+
+mixin cdnjs(script, sri)
+	script(src=`https://cdnjs.cloudflare.com/ajax/libs/${script}` integrity=sri crossorigin="anonymous")
+
 html
 	head
 		meta(charset="UTF-8")
@@ -6,15 +10,16 @@ html
 
 		link(rel="stylesheet", href="/static/styles/reveal/olivegreen.css")/
 
+		script(src="/static/scripts/reveal.js")
+		+cdnjs("headjs/1.0.3/head.load.min.js", "sha384-Kc5NaH/uiwuj/oe6kJ9DxdAG81fhsuvYAzQ/eYM/1FXz+I13oYnGLwnHJ3pXJ7QB")
+		+cdnjs("highlight.js/9.12.0/highlight.min.js", "sha384-ZeLYJ2PNSQjvogWP559CDAf02Qb8FE5OyQicqtz/+UhZutbrwyr87Be7NPH/RgyC")
+		+cdnjs("highlight.js/9.12.0/languages/rust.min.js", "sha384-PbT2NUSkcu+Vhp0+7v/NMaiNWEoNMlU1sjWtN/NPeiO9KSZtBKkDLRUGuRowHbOr")
+
 	body
 		.reveal
 			.slides
 				| !{contents}
 
-		script(src="/static/scripts/reveal.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.load.min.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/languages/rust.min.js")
 		script(type="text/javascript").
 			hljs.initHighlightingOnLoad();
 			Reveal.initialize({
