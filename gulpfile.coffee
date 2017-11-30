@@ -106,6 +106,23 @@ gulp.task 'presentations', ->
 	merge(presentations, assets)
 		.pipe gulp.dest('build/content/presentations')
 
+gulp.task 'pages', ->
+	md = gulp.src(['content/pages/*.md'])
+		.pipe frontmatter
+			property: 'page'
+			remove: true
+		.pipe markdown()
+		.pipe template('page')
+
+	pages = gulp.src(['content/pages/*.pug'])
+		.pipe frontmatter
+			property: 'page'
+			remove: true
+		.pipe pug()
+
+	pages = merge(md, pages)
+		.pipe gulp.dest('build/')
+
 gulp.task 'scripts', ->
 	reveal = gulp.src(['node_modules/reveal.js/plugin/**'])
 		.pipe gulp.dest('build/static/scripts/reveal/plugin/')
@@ -145,7 +162,7 @@ gulp.task 'styles', ->
 
 
 tasks = [
-	'articles', 'presentations', 'styles', 'scripts', 'images'
+	'articles', 'presentations', 'pages', 'styles', 'scripts', 'images'
 ]
 
 gulp.task 'watch', gulp.parallel tasks, ->
@@ -157,7 +174,7 @@ gulp.task 'watch', gulp.parallel tasks, ->
 		'content/**/*.jpg',
 		'content/**/*.svg',
 		'templates/*.pug'
-	], gulp.parallel('presentations', 'articles'))
+	], gulp.parallel('presentations', 'articles', 'pages'))
 
 	gulp.watch([
 		'static/styles/**/*.css',

@@ -1,0 +1,25 @@
+extends ../../templates/base.pug
+
+block main
+	form#options(method="get" action=".")
+		span
+			| Protocol:
+			select(name="proto")
+				option(value="minmax") MinMax
+				option(value="minmax+") MinMax+
+				option(value="asfar") AsFar
+				option(value="unistages") UniStages
+				option(value="unialternate") UniAlternate
+
+		span Nodes: #[input(name="nodes" value="32" size="5")]
+		span
+			| Values:
+			select(name="values")
+				option(value="random") Random
+				option(value="worst") Worst-case
+		span.random Seed: #[input(name="seed" type="text" value="" size="8")]
+		span #[input(name="reset" type="submit" value="Restart")]
+
+	div#wrapper
+		div#canvas
+		ul#messages
