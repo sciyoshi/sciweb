@@ -1,3 +1,8 @@
+# Presentation URLs
+[[redirects]]
+  from = "/content/presentations/*"
+  to = "/presentations/:splat"
+
 # Single digit month URLs
 [[redirects]]
   from = "/:year/1/*"
