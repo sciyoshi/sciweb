@@ -1,0 +1,85 @@
+# Single digit month URLs
+[[redirects]]
+  from = "/:year/1/*"
+  to = "/:year/01/:splat"
+
+[[redirects]]
+  from = "/:year/2/*"
+  to = "/:year/02/:splat"
+
+[[redirects]]
+  from = "/:year/3/*"
+  to = "/:year/03/:splat"
+
+[[redirects]]
+  from = "/:year/4/*"
+  to = "/:year/04/:splat"
+
+[[redirects]]
+  from = "/:year/5/*"
+  to = "/:year/05/:splat"
+
+[[redirects]]
+  from = "/:year/6/*"
+  to = "/:year/06/:splat"
+
+[[redirects]]
+  from = "/:year/7/*"
+  to = "/:year/07/:splat"
+
+[[redirects]]
+  from = "/:year/8/*"
+  to = "/:year/08/:splat"
+
+[[redirects]]
+  from = "/:year/9/*"
+  to = "/:year/09/:splat"
+
+# Old blog URLs
+[[redirects]]
+  from = "/blog/:year/jan/:day/*"
+  to = "/:year/01/:splat"
+
+[[redirects]]
+  from = "/blog/:year/feb/:day/*"
+  to = "/:year/02/:splat"
+
+[[redirects]]
+  from = "/blog/:year/mar/:day/*"
+  to = "/:year/03/:splat"
+
+[[redirects]]
+  from = "/blog/:year/apr/:day/*"
+  to = "/:year/04/:splat"
+
+[[redirects]]
+  from = "/blog/:year/may/:day/*"
+  to = "/:year/05/:splat"
+
+[[redirects]]
+  from = "/blog/:year/jun/:day/*"
+  to = "/:year/06/:splat"
+
+[[redirects]]
+  from = "/blog/:year/jul/:day/*"
+  to = "/:year/07/:splat"
+
+[[redirects]]
+  from = "/blog/:year/aug/:day/*"
+  to = "/:year/08/:splat"
+
+[[redirects]]
+  from = "/blog/:year/sep/:day/*"
+  to = "/:year/09/:splat"
+
+[[redirects]]
+  from = "/blog/:year/oct/:day/*"
+  to = "/:year/10/:splat"
+
+[[redirects]]
+  from = "/blog/:year/nov/:day/*"
+  to = "/:year/11/:splat"
+
+[[redirects]]
+  from = "/blog/:year/dec/:day/*"
+  to = "/:year/12/:splat"
