@@ -89,7 +89,7 @@ gulp.task 'articles', ->
 		.pipe renameDate(true)
 
 	merge(articles, assets)
-		.pipe gulp.dest('build/content/articles')
+		.pipe gulp.dest('build/')
 
 gulp.task 'presentations', ->
 	presentations = gulp.src(['content/presentations/*.pug'])
@@ -103,7 +103,7 @@ gulp.task 'presentations', ->
 		.pipe renameDate(true)
 
 	merge(presentations, assets)
-		.pipe gulp.dest('build/content/presentations')
+		.pipe gulp.dest('build/presentations')
 
 gulp.task 'pages', ->
 	md = gulp.src(['content/pages/*.md'])
