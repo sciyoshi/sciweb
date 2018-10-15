@@ -46,9 +46,9 @@ A third way to describe a Gray code is by the sequence of positions that change
 between consecutive strings. If $G$ is an $n$-digit cyclic binary Gray code,
 then there are integers $\delta_0, \delta_1, \cdots, \delta_{m-1}$, called the
 <em>transition (delta) sequence of $G$</em>, such that
-\begin{equation}
+\[
 g_{k+1} = 2^{\delta_k} \oplus g_k \, , \text{ for } k \in \mathbb{Z}_m
-\end{equation}
+\]
 where the vectors $g_k$ are interpreted as binary numbers. Note that the
 elements of the transition sequence correspond to edges in the Hamiltonian path
 described by the Gray code.
@@ -60,9 +60,9 @@ The most well-known binary Gray code, the <em>binary reflected Gray code</em>
 analog signals to digital ones. The BRGC $\Gamma_n = (\gamma_n(0), \cdots,
 \gamma_n(n-1))$ can be defined recursively by letting $\Gamma_0$ be the empty
 string and writing
-\begin{equation}
+\[
 \Gamma_{n+1} = (0\gamma_n(0), \cdots, 0\gamma_n(n-1), 1\gamma_n(n-1), \cdots, 1\gamma_n(0))
-\end{equation}
+\]
 In general, however, there are many different ways to define Gray codes, and
 some of these alternative definitions have certain desirable properties. The
 rest of this paper will review the other Gray codes that have been studied in
@@ -95,15 +95,15 @@ can be solved using <em>single-track Gray codes</em> (proposed in
 <a href="#hiltgen_single-track_1996">[5]</a>) where instead multiple reading heads are used
 on a single track. For this to be possible with a Gray code $G = (g_1, g_2,
 \cdots, g_m)$, the <em>component tracks (sequences)</em>
-\begin{equation}
+\[
 C_j(G) = (g_1^j, g_2^j, \cdots, g_m^j)
-\end{equation}
+\]
 for $j \in \mathbb{Z}_n$ must be cyclic shifts of each other. That is, if $E$ is
 the left-shift operator on $n$-digit strings, then for every $j \in
 \mathbb{Z}_n$,
-\begin{equation}
+\[
 C_j(G) = E^{t_j}(C_0(G))
-\end{equation}
+\]
 and the $t_j$ are called the <em>head positions</em> of the Gray code.
 </p>
 
@@ -137,9 +137,9 @@ number of changes in each coordinate position as close as possible. To make this
 more precise, let $G$ be a $R$-ary complete Gray cycle having transition
 sequence $(\delta_k)$; the <em>transition counts (spectrum) of $G$</em> are the
 collection of integers defined by
-\begin{equation}
+\[
 \lambda_k = |\{ j \in \mathbb{Z}_{R^n} : \delta_j = k \}| \, , \text { for } k \in \mathbb{Z}_R
-\end{equation}
+\]
 We say that a Gray code is <em>uniform</em> or <em>uniformly balanced</em> if
 its transition counts are all equal, in which case we have $\lambda_k = R^n / n$
 for all $k$. Clearly, when $R = 2$, such codes exist only if $n$ is a power of
@@ -167,17 +167,19 @@ to inductively construct a $(n+2)$-digit Gray code $G'$ given an $n$-digit Gray
 code $G$ in such a way that the balanced property is preserved. To do this, we
 consider partitions of $G = g_0, \cdots, g_{2^n-1}$ into an even number $L$ of
 non-empty blocks of the form
-\begin{equation}
+\[
 \{g_0\}, \{g_1, \cdots, g_{k_2}\}, \{g_{k_2+1}, \cdots, g_{k_3}\}, \cdots, \{g_{k_{L-2}+1}, \cdots, g_{-2}\}, \{g_{-1}\}
-\end{equation}
+\]
 where $k_1 = 0$, $k_{L-1} = -2$, and $k_{L} = -1$ (mod $2^n$). This partition
 induces a $(n+2)$-digit Gray code in given by
-\begin{eqnarray}
-&& 00g_0 \nonumber \\
-&& 00g_1, \cdots, 00g_{k_2}, 01g_{k_2}, \cdots, 01g_1, 11g_1, \cdots, 11g_{k_2}, \\
-&& 11g_{k_2+1}, \cdots, 11g_{k_3}, 01g_{k_3}, \cdots, 01g_{k_2+1}, 00g_{k_2+1}, \cdots, 00g_{k_3}, \cdots, \nonumber \\
-&& 00g_{-2}, 00g_{-1}, 10g_{-1}, 10g_{-2}, \cdots, 10g_0, 11g_0, 11g_{-1}, 01g_{-1}, 01g_0 \nonumber
-\end{eqnarray}
+\[
+\begin{aligned}
+& 00g_0,  \\
+& 00g_1, \cdots, 00g_{k_2}, 01g_{k_2}, \cdots, 01g_1, 11g_1, \cdots, 11g_{k_2}, \\
+& 11g_{k_2+1}, \cdots, 11g_{k_3}, 01g_{k_3}, \cdots, 01g_{k_2+1}, 00g_{k_2+1}, \cdots, 00g_{k_3}, \cdots,  \\
+& 00g_{-2}, 00g_{-1}, 10g_{-1}, 10g_{-2}, \cdots, 10g_0, 11g_0, 11g_{-1}, 01g_{-1}, 01g_0
+\end{aligned}
+\]
 This process can be more easily visualized in <a href="#balanced">Figure 2</a>, where the
 3-digit Gray code defined by the transition sequence 01020102 is extended to a
 5-digit code using the partition $\{g_0\}, \{g_1, g_2\}, \{g_3, g_4\}, \{g_5\},
@@ -190,13 +192,12 @@ If we define the <em>transition multiplicities</em> $m_i = |\{ j : \delta_{k_j}
 = i, 1 \leq j \leq L \}|$ to be the number of times the digit in position $i$
 changes between consecutive blocks in a partition, then for the $(n+2)$-digit
 Gray code induced by this partition the transition spectrum $\lambda'_k$ is
-\begin{equation}
-\label{newspectrum}
+\[
 \lambda'_k = \begin{cases}
 4 \lambda_k - 2 m_k, \, \text{ if } 0 \leq k < n \\
 L, \, \text{ otherwise }
 \end{cases}
-\end{equation}
+\]
 This can be seen by looking at the diagram; the transition between $g_i$
 and $g_{i+1}$ occurs exactly four times if $g_i$ and $g_{i+1}$ are in the
 same partition, and exactly twice otherwise (the &ldquo;notch&rdquo; also ensures
@@ -219,9 +220,9 @@ Another way of balancing Gray codes is to maximize the distance between
 consecutive changes of digits in the same position. That is, we would like
 to find a $n$-digit Gray code $G$ with transition sequence $(\delta_k)$ such
 that the <em>minimum run length of $G$</em>
-\begin{equation}
+\[
 \text{mrl}(G) = \min \{ |i-j| : \delta_i = \delta_j, i \neq j \}
-\end{equation}
+\]
 is maximal over all $n$-digit Gray codes. As an example, the minimum run
 length for every binary reflected Gray code is $\text{mrl}(BRGC) = 2$, since the
 bit in position 0 changes at every two steps. A 5-digit Gray code which
@@ -247,9 +248,9 @@ This sequence has been characterized by <a href="#goddyn_binary_2003">[4]</a>, w
 that, for integers $a$ and $b$ satisfying $(a-1)(2^a - 2a - 6) \leq 2^b$,
 $\text{mrl}(a+b) \geq 2 \min \{ a-1, \text{mrl}(b) \}$.
 This recurrence relation, when solved, yields the lower bound
-\begin{equation}
+\[
 \text{mrl}(n) \geq n - \lfloor 2.001 \lg n \rfloor \text{ for } n \geq 2
-\end{equation}
+\]
 The proof involves decomposing the hypercube $Q_n$ into $Q_a \times Q_b$
 and merging a &ldquo;stream&rdquo; in $Q_a$ (a set of $2^a$ walks induced by a sequence
 of step permutation on $Q_a$ taking vertices to their neighbors) and a
@@ -273,9 +274,9 @@ through two adjacent weights before reaching the next one.
 We can formalize the concept of monotone Gray codes as follows: consider the
 partition of the hypercube $Q_n = (V_n, E_n)$ into <em>levels</em> of vertices
 that have equal weight, i.e.
-\begin{equation}
+\[
 V_n(i) = \{ v \in V_n : v \text{ has weight } i \}
-\end{equation}
+\]
 for $0 \leq i \leq n$. These levels satisfy $|V_n(i)| = \binom{n}{i}$. Let
 $Q_n(i)$ be the subgraph of $Q_n$ induced by $V_n(i) \cup V_n(i+1)$, and let
 $E_n(i)$ be the edges in $Q_n(i)$. A monotonic Gray code is then a Hamiltonian
@@ -296,15 +297,15 @@ An elegant construction of monotonic $n$-digit Gray codes for any $n$ was found
 in <a href="#savage_monotone_1995">[10]</a>. The idea is to recursively build subpaths
 $P_{n,j}$ of length $2 \binom{n}{j}$ having edges in $E_n(j)$. We define
 $P_{1,0} = (0, 1)$, $P_{n,j} = \emptyset$ whenever $j < 0$ or $j \geq n$, and
-\begin{equation}
+\[
 P_{n+1,j} = 1P^{\pi_n}_{n,j-1}, 0P_{n,j}
-\end{equation}
+\]
 otherwise. Here, $\pi_n$ is a suitably-defined permutation and $P^{\pi}$ refers
 to the path $P$ with its coordinates permuted by $\pi$. These paths give rise to
 two monotonic $n$-digit Gray codes $G_n^{(1)}$ and $G_n^{(2)}$ given by
-\begin{equation}
+\[
 G_n^{(1)} = P_{n,0} P_{n,1}^R P_{n,2} P_{n,3}^R \cdots \text{ and } G_n^{(2)} = P_{n,0}^R P_{n,1} P_{n,2}^R P_{n,3} \cdots
-\end{equation}
+\]
 The choice of $\pi_n$ which ensures that these codes are indeed Gray codes turns
 out to be $\pi_n = E^{-1}(\pi_{n-1}^2)$. The first few values of $P_{n,j}$ are
 shown in <a href="#monotonic_subpaths">Table 1</a>.

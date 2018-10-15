@@ -5,32 +5,34 @@
   "repository": "https://github.com/sciyoshi/sciweb",
   "license": "UNLICENSED",
   "devDependencies": {
-    "coffeescript": "^2.0.2",
-    "cssnano": "^3.8.0",
-    "gulp": "git://github.com/gulpjs/gulp.git#4.0",
+    "autoprefixer": "^9.1.5",
+    "coffeescript": "^2.3.2",
+    "cssnano": "^4.1.4",
+    "gulp": "^4.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-front-matter": "^1.3.0",
-    "gulp-markdown": "^1.2.0",
-    "gulp-postcss": "^7.0.0",
-    "gulp-pug": "^3.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
+    "gulp-markdown": "^3.0.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.2.0",
-    "gulp-uglify": "^3.0.0",
+    "gulp-uglify": "^3.0.1",
     "merge-stream": "^1.0.0",
-    "moment": "^2.15.1",
-    "postcss-import": "^11.0.0",
-    "precss": "^2.0.0",
-    "pug": "^2.0.0-rc.3",
+    "moment": "^2.22.2",
+    "postcss": "^7.0.5",
+    "postcss-import": "^12.0.0",
+    "precss": "^3.1.2",
+    "pug": "^2.0.3",
     "through2": "^2.0.1"
   },
   "scripts": {
-    "build": "gulp --require=coffeescript/register",
-    "watch": "gulp --require=coffeescript/register watch",
+    "build": "gulp",
+    "watch": "gulp watch",
     "start": "docker run -v $PWD/build:/var/www -v $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -p 8280:80 --rm -it nginx:alpine"
   },
   "dependencies": {
-    "reveal.js": "^3.3.0"
+    "reveal.js": "^3.7.0"
   },
   "coffeelintConfig": {
     "no_tabs": {

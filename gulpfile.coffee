@@ -81,7 +81,6 @@ gulp.task 'articles', ->
 			remove: true
 
 	articles = merge(md, html)
-		.pipe collect()
 		.pipe template('article')
 		.pipe renameDate()
 		.pipe rename (path) -> path.basename = "index"
@@ -120,7 +119,10 @@ gulp.task 'pages', ->
 			remove: true
 		.pipe pug()
 
-	pages = merge(md, pages)
+	index = gulp.src(['content/index.pug'])
+		.pipe pug()
+
+	pages = merge(md, pages, index)
 		.pipe gulp.dest('build/')
 
 gulp.task 'scripts', ->

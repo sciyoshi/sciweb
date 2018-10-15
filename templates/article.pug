@@ -1,24 +1,36 @@
 extends base.pug
 
+block styles
+	if page.mathjax
+		link(
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"
+			integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei"
+			crossorigin="anonymous")
+
 block scripts
 	if page.mathjax
-		script(type="text/x-mathjax-config").
-			MathJax.Hub.Config({
-				extensions: ["tex2jax.js", "TeX/AMSmath.js", "MatchWebFonts.js"],
-				jax: ["input/TeX", "output/HTML-CSS"],
-				MatchWebFonts: {
-					matchFor: {
-						"HTML-CSS": true,
-						NativeMML: false,
-						SVG: false
-					},
-					fontCheckDelay: 2000,
-					fontCheckTimeout: 30 * 1000
-				},
-				tex2jax: {inlineMath: [["$", "$"], ["\\(", "\\)"]]}
-			});
+		script(
+			src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"
+			integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq"
+			crossorigin="anonymous")
 
-		+cdnjs("mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML", "sha384-ekJxthwrl3ID8DzHP2myRUdIPhTdEgNJ1xKhDsMKDT3+kBlZ4Zwk5zH960SnLZR8")
+		script(
+			src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js"
+			integrity="sha384-IiI65aU9ZYub2MY9zhtKd1H2ps7xxf+eb2YFG9lX6uRqpXCvBTOidPRCXCrQ++Uc"
+			crossorigin="anonymous")
+
+		script(type="text/javascript").
+			document.addEventListener('DOMContentLoaded', function() {
+				renderMathInElement(document.body, {
+					delimiters: [
+						{left: "$$", right: "$$", display: true},
+						{left: "\\[", right: "\\]", display: true},
+						{left: "$", right: "$", display: false},
+						{left: "\\(", right: "\\)", display: false}
+					]
+				});
+			});
 
 block title
 	title= page.title
@@ -26,3 +38,4 @@ block title
 block main
 	h1 !{page.title}
 	| !{contents}
+

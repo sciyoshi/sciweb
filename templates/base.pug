@@ -11,6 +11,8 @@ html
 		link(rel="stylesheet", type="text/css", href="/static/styles/main.css")/
 		link(rel="stylesheet", type="text/css", href="/static/styles/github.css")/
 
+		block styles
+
 		script(src="https://use.typekit.net/yvp8del.js")
 		script(type="text/javascript") try{Typekit.load({ async: true });}catch(e){}
 
@@ -26,11 +28,6 @@ html
 		div#header
 			a(href="/") Samuel Cormier-Iijima
 			| &rsquo;s home on the web
-
-		div#nav
-			ul
-				li: a(href="/") Home
-				li: a(href="/about/") About
 
 		div#main
 			block main

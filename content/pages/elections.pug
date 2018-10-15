@@ -1,5 +1,8 @@
 extends ../../templates/base.pug
 
+block scripts
+	script(src="/static/scripts/elections.js")
+
 block main
 	form#options(method="get" action=".")
 		span
