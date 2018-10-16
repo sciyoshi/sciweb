@@ -22,13 +22,13 @@ To do so, I am signing this object:
       "username": "sciyoshi"
     },
     "merkle_root": {
-      "ctime": 1539664701,
-      "hash_meta": "1642c4247f68d442e05aefc22828b5bc191fe109e3f0d6fe840b91c0a1d1fb3d",
-      "seqno": 3800298
+      "ctime": 1539665388,
+      "hash_meta": "908fc9bd0de064572a6d8c83e140010f643757480b21c36c70a11221c2b5d82b",
+      "seqno": 3800315
     },
     "revoke": {
       "sig_ids": [
-        "7ce9bbd574a694053cd9c54f70e3f01bde4c1070e66c7a937ed408d17d99df9a0f"
+        "1bdfa13298e8a9bc8796209531dbbc05c02f96f21e389bf81755862f0e646e150f"
       ]
     },
     "service": {
@@ -38,10 +38,10 @@ To do so, I am signing this object:
     "type": "web_service_binding",
     "version": 1
   },
-  "ctime": 1539664750,
+  "ctime": 1539665391,
   "expire_in": 157680000,
-  "prev": "757ce252e6d610c5816948c9529cdb637865c78fdc2c3d16a6e94bcd9b007eb8",
-  "seqno": 84,
+  "prev": "27ae7d22040fa7a6e974f5484d25d326a45fef756716a81bf6559b6c708f594a",
+  "seqno": 86,
   "tag": "signature"
 }
 
@@ -51,26 +51,26 @@ which yields the signature:
 Version: Keybase OpenPGP v2.0.80
 Comment: https://keybase.io/crypto
 
-yMKyAnicrVNdaFxFGN1N1WhMNIQi9aXgLWpD13Xm3pm5M4uQIH0yWASx2iayzu/m
-djd7N/ferI1hRRA05sEiWPAnCBqwINhCQWhD0y4hofWHWGNrg7RUKrEVGiJKnjSt
-c0NFqK8+DTNzvvOdc76ZuY5NmbZsNn9kywyJLmW/nq2PZPrny9UxR4Rq1CmMOWW9
-seiK0nFSLAfKKTgAAki0B3wEFVLMKES44djVFBIiKJTSeMgAaU+lb7A0GHLoG+hJ
-iIgRhLuGAe7kHBNUSzqqRUE1sbTEd4WEkmkhuattHVLYAC0BdDU3kArlWYhStnAw
-jNMKK07wWOeD0J7ZTfGWvP/g/2fdIxt0QghMsU+MNEh6miIlMXc5lUAa6gKQAmMd
-VfmQtuhYBqNhPBg4jZwzpKNyRRejMEzScGUSpBCIPUYI8gG0Bnk8WBzSCbeVkCBX
-Ihf5hlCFkKsB5tpI16UuFdhGxqDREDDtGaCIsUKAYFACDhU0wkv9x3q4GjoFjwLg
-MmoVRLoelnXaPA5KNrbYKfQ7vtRMCIV9xAlDAHtSMYmR8UFKDYXSSEJgd4RInzPP
-1woBqqCvGFOGcWCcFxtps6geyA3ydE63+c/LcMgqqkVhEsqwYm8Gk6QWF9JcktFa
-Cn1Zi+ItkqIIqsq+EltR11EchFWbk0XeFhkGOUfvrwWRLgYpwk7FWgUg7aPrltLH
-1pxrR00UgUBiO3GGqGTYZVIJ4vmUYOlTo6QrPQUJJ5ohYf0LAHwt6L8ZUmR18lLq
-KChVeTISaacx2xy4I5Nty9x1Z0v6fTJt93T+86me2Nl6c08ye+zC7u/nvtnZXFtc
-cOYv5jY/udq6fmp6z/jk2XyH6Lvxzvmpo/c2D+97YHIZzvw+c+KZqz+tdsct2xce
-/PjEkvhZHLs+dUbkWo/3vqcyzc9emZuYyC6tHf7xhz7vxhcXNn+1Utm7ffnmqYM7
-Frp+2dY5/fZIV+2NVjHd/ujUC7/tzhVK+cXTD5/dv9Leefe5Lcuf9L/Ve2TrS6c/
-/TMY7hmfWJ3vvfZR95v58a35d5996OrnvzZn/ur5Y/3kRWf01V2vHz10feBAZd+1
-9sbzpHHwyuxKccf9h5bGHtm7jd7X8eVzH/b1HB840HLl8eHJ9U29/vuvXX56TS0+
-1lVurnz31JlwF9HdH3zr/g1aFYln
-=cTQc
+yMK7AnicrVNraB1FGL3XNJampFRINCAJZo3a6CXOzM5rL2pBRY2YNgpGbVIu80y2
+yb17u7u5SaxBbBWVakUrFkp/GESsgoj4gGKLNhrFaH1UKwRpoFApplQrlYI2UmdD
+Rah//bWzM+c73znnm/mksS7XkM93vdVygMZH819M10Zz/TPlX7d4MtITXnGLN2yW
+PmZEmyQtDYfaK3oAAkiNDxiGGuvAakyFFQQZDimVHCplfWyBcruKWaIsgQIyC30F
+MbWSCmQDILyCZ8PKoImrcVhJHS1lSCqoAiOVQMbVYU0sMApAZISFXGrfQbR2hUNR
+klU4cVIkpiuM3J77KV2Q9x/8/6x7dIlOSkk4YdQqi5VvONaKCCS4AspyBEAGTExc
+EWXj0IkKJ6JkKPQmC17ZxMMjphRHUZqFq9Iwg0DiB5QSn3NnUCRDpbJJhasMALcq
+kBpoAygmDAmqueK+gRg4S5ZinxGGOZAIKp8qBgSEyK2RJJoj6XQkZnMl8oo+B8CH
+xCmITS0aNlnzJBx0sSVesd+DUlsBfRRww0UgFWcBRSAgPtRSKkAUcAFQi6DxeSAt
+h4wQTpGbEcXUQAKst3EyaxbXQrVEns3pIv9dKio7RdU4SiMVjbiToTStJsUsl3Si
+mkHHjCxdICnJsKLdLXEVNRMnYVRxOTnkRZEFsOCZ8WoYm1KYIdxUnFUAsj6m5igR
+E4ZphAAGVjBBTcCwJdjNDBHtIyowscYyQhmkgkNpKSGBzLLklgRY/Jshp06nGMwc
+hYMVkY7Gxpuc/mhgWS7fkLu0/pLs+eQaVqz+51Hdc2j5+Z7wu8172jb2tX7+9vtt
+oPm2E2OzLx1aOT320Nmn73zh+22Lp083/dbT/2Th2IdX/9xx+auouLP3nc5Tmzo6
+/rrvm+ea91T3n3yieGT5iQ1za7a9du6Rlc3dO6aa73hmbkT2HUd9rfOdi2fXtD86
+zjd8/Nju9u3B9tdzJ6Om3XXrbjy1s+7u37s/m29rOtM95eW31t216o3nb/2gNv/L
+p+WF3m8PbDq8d/8N69dGO9Sylq/Wv/zD+JvvvXjmwdXd69b+WHr4p3ufuvaPwwt/
+vvv10d6ZavvBvqljuxbw1itmW+fqHwg6Fp9tPN9y5d6ma44srLrONr6yyx+45f6r
+rq9/fGzf7EDPTTOXrbj9eKHnXOeXB/fd/DfB/n6V
+=Xq3q
 -----END PGP MESSAGE-----
 
 And finally, I am proving ownership of this host by posting or
