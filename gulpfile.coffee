@@ -122,7 +122,9 @@ gulp.task 'pages', ->
 	index = gulp.src(['content/index.pug'])
 		.pipe pug()
 
-	pages = merge(md, pages, index)
+	files = gulp.src(['static/files/.**/**', 'static/files/**/**'])
+
+	pages = merge(md, pages, index, files)
 		.pipe gulp.dest('build/')
 
 gulp.task 'scripts', ->

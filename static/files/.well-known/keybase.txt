@@ -1,0 +1,81 @@
+==================================================================
+https://keybase.io/sciyoshi
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://sciyoshi.com
+  * I am sciyoshi (https://keybase.io/sciyoshi) on keybase.
+  * I have a public key with fingerprint 672B C1C9 EBCA 2EF5 C4D5  F0EC 012E AF18 BD36 72DD
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01016e30741d4d9fd46afa52e8166b81ccf34f0c6afc7f5cf51a17f13c146fb6a2f90a",
+      "fingerprint": "672bc1c9ebca2ef5c4d5f0ec012eaf18bd3672dd",
+      "host": "keybase.io",
+      "key_id": "012eaf18bd3672dd",
+      "kid": "01016e30741d4d9fd46afa52e8166b81ccf34f0c6afc7f5cf51a17f13c146fb6a2f90a",
+      "uid": "bbb58576fcf4c3e84dc5a2a8c0cf8200",
+      "username": "sciyoshi"
+    },
+    "merkle_root": {
+      "ctime": 1539664701,
+      "hash_meta": "1642c4247f68d442e05aefc22828b5bc191fe109e3f0d6fe840b91c0a1d1fb3d",
+      "seqno": 3800298
+    },
+    "revoke": {
+      "sig_ids": [
+        "7ce9bbd574a694053cd9c54f70e3f01bde4c1070e66c7a937ed408d17d99df9a0f"
+      ]
+    },
+    "service": {
+      "hostname": "sciyoshi.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1539664750,
+  "expire_in": 157680000,
+  "prev": "757ce252e6d610c5816948c9529cdb637865c78fdc2c3d16a6e94bcd9b007eb8",
+  "seqno": 84,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.80
+Comment: https://keybase.io/crypto
+
+yMKyAnicrVNdaFxFGN1N1WhMNIQi9aXgLWpD13Xm3pm5M4uQIH0yWASx2iayzu/m
+djd7N/ferI1hRRA05sEiWPAnCBqwINhCQWhD0y4hofWHWGNrg7RUKrEVGiJKnjSt
+c0NFqK8+DTNzvvOdc76ZuY5NmbZsNn9kywyJLmW/nq2PZPrny9UxR4Rq1CmMOWW9
+seiK0nFSLAfKKTgAAki0B3wEFVLMKES44djVFBIiKJTSeMgAaU+lb7A0GHLoG+hJ
+iIgRhLuGAe7kHBNUSzqqRUE1sbTEd4WEkmkhuattHVLYAC0BdDU3kArlWYhStnAw
+jNMKK07wWOeD0J7ZTfGWvP/g/2fdIxt0QghMsU+MNEh6miIlMXc5lUAa6gKQAmMd
+VfmQtuhYBqNhPBg4jZwzpKNyRRejMEzScGUSpBCIPUYI8gG0Bnk8WBzSCbeVkCBX
+Ihf5hlCFkKsB5tpI16UuFdhGxqDREDDtGaCIsUKAYFACDhU0wkv9x3q4GjoFjwLg
+MmoVRLoelnXaPA5KNrbYKfQ7vtRMCIV9xAlDAHtSMYmR8UFKDYXSSEJgd4RInzPP
+1woBqqCvGFOGcWCcFxtps6geyA3ydE63+c/LcMgqqkVhEsqwYm8Gk6QWF9JcktFa
+Cn1Zi+ItkqIIqsq+EltR11EchFWbk0XeFhkGOUfvrwWRLgYpwk7FWgUg7aPrltLH
+1pxrR00UgUBiO3GGqGTYZVIJ4vmUYOlTo6QrPQUJJ5ohYf0LAHwt6L8ZUmR18lLq
+KChVeTISaacx2xy4I5Nty9x1Z0v6fTJt93T+86me2Nl6c08ye+zC7u/nvtnZXFtc
+cOYv5jY/udq6fmp6z/jk2XyH6Lvxzvmpo/c2D+97YHIZzvw+c+KZqz+tdsct2xce
+/PjEkvhZHLs+dUbkWo/3vqcyzc9emZuYyC6tHf7xhz7vxhcXNn+1Utm7ffnmqYM7
+Frp+2dY5/fZIV+2NVjHd/ujUC7/tzhVK+cXTD5/dv9Leefe5Lcuf9L/Ve2TrS6c/
+/TMY7hmfWJ3vvfZR95v58a35d5996OrnvzZn/ur5Y/3kRWf01V2vHz10feBAZd+1
+9sbzpHHwyuxKccf9h5bGHtm7jd7X8eVzH/b1HB840HLl8eHJ9U29/vuvXX56TS0+
+1lVurnz31JlwF9HdH3zr/g1aFYln
+=cTQc
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/sciyoshi
+
+==================================================================
