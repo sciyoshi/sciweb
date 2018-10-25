@@ -1,0 +1,50 @@
+---
+title: GraphQL
+---
+
+mixin mark(code)
+	mark.fragment.highlight-current-background-gray= code
+
+section
+	h2 GraphQL
+section
+	h3 REST
+	ul
+		li.fragment Leverage HTTP
+		li.fragment Stateless APIs
+		li.fragment Cacheability
+section
+	pre: code.http.
+		#[+mark('GET')] #[+mark('/repos/python/cpython')] HTTP/1.1
+		Host: api.github.com
+
+		{
+		  "id": 81598961,
+		  "name": "cpython",
+		  "description": "The Python programming language",
+		  "private": false,
+		  "stargazers_count": 14379,
+		  "forks_url": "/repos/python/cpython/forks",
+		  ...
+		}
+section
+	h3 Pain Points
+	ul
+		li.fragment Extraneous Data
+		li.fragment Multiple Queries
+		li.fragment Standardization (crossrefs, pagination)
+		li.fragment Introspection
+section
+	pre: code.http.
+		GET /repos/python/cpython#[+mark('?include=name,private')] HTTP/1.1
+		Host: api.github.com
+
+		{
+		  "name": "cpython",
+		  "private": false
+		}
+section
+	h3 GraphQL
+	ul
+		li.fragment Explicit Hierarchical Queries
+		li.fragment Strongly Typed + Introspectable
