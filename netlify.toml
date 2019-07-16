@@ -1,3 +1,28 @@
+# Domains
+[[redirects]]
+  from = "https://iiji.ma/*"
+  to = "https://sciyoshi.com/:splat"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "http://iiji.ma/*"
+  to = "https://sciyoshi.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://cormier-iijima.com/*"
+  to = "https://sciyoshi.com/:splat"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "https://cormier-iijima.com/*"
+  to = "https://sciyoshi.com/:splat"
+  status = 301
+  force = true
+
 # Presentation URLs
 [[redirects]]
   from = "/content/presentations/*"
