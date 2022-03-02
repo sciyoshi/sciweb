@@ -32,7 +32,7 @@
     "start": "docker run -v $PWD/build:/var/www -v $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -p 8280:80 --rm -it nginx:alpine"
   },
   "dependencies": {
-    "reveal.js": "^3.7.0"
+    "reveal.js": "^4.3.0"
   },
   "coffeelintConfig": {
     "no_tabs": {
