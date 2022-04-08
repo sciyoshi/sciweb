@@ -19,7 +19,7 @@
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^3.0.1",
     "merge-stream": "^1.0.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "postcss": "^7.0.5",
     "postcss-import": "^12.0.0",
     "precss": "^3.1.2",
